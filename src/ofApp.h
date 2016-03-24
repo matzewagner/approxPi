@@ -21,21 +21,25 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
+        void audioOut( float * output, int bufferSize, int nChannels );
+    
         double approxPi(double prev_value, int n);
-        
+    
+        void printToConsole();
+    
         ofTrueTypeFont myFont;
         int fontSize;
     
         double myNumber = 0.0;
         int n = 1;
         int sign = -1;
+        int iteration = 0;
+        float updateFrequency = 1000.0/8.75;
+        float timeNow;
     
         std::stringstream s;
         std::string myPreString, myString1, myString2, myString3;
     
         float sWidth1, sWidth2, sWidth3;
-    
-        bool drawLine = false;
-    
 		
 };

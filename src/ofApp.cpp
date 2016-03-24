@@ -8,18 +8,17 @@ void ofApp::setup(){
     ofBackground(30, 30, 30);
     fontSize = int(ofGetHeight()*0.25);
     myFont.load("Futura-Medium.ttf", fontSize);
+    ofSoundStreamSetup(2, 0);
 
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
-    // approximate pi
-    myNumber = approxPi(myNumber, n);
     
     // convert nyNumber into 3 substrings
     s << std::fixed << std::setprecision(10) << myNumber*4.0;
@@ -43,8 +42,6 @@ void ofApp::draw(){
     s.str("");
     s.clear();
     
-    // increment term
-    n+=2;
 }
 
 //--------------------------------------------------------------
@@ -69,7 +66,6 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    drawLine = !drawLine;
 }
 
 //--------------------------------------------------------------
@@ -104,9 +100,28 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 //--------------------------------------------------------------
 double ofApp::approxPi(double prev_value, int n) {
-    
-    
     sign *= -1;
     return prev_value + sign/double(n);
-    
+}
+
+//--------------------------------------------------------------
+void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
+    // approximate pi
+    timeNow = ofGetElapsedTimeMillis();
+    if (fmod(timeNow, updateFrequency) < 5) {
+        myNumber = approxPi(myNumber, n);
+        ++iteration;
+        n+=2;
+//        printToConsole();
+        ofResetElapsedTimeCounter();
+    }
+}
+
+//--------------------------------------------------------------
+void ofApp::printToConsole() {
+    std::cout
+        << "Iteration: " << iteration
+        << "\tValue: " << myNumber*4.0
+        << "\tupdate frequency: " << float(1000.0/ timeNow) << " Hz"
+        << std::endl;
 }
