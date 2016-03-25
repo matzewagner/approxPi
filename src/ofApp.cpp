@@ -10,6 +10,7 @@ void ofApp::setup(){
     myFont.load("Futura-Medium.ttf", fontSize);
 
     ofSoundStreamSetup(2, 0);
+    // set values for incrementing the different partials
     for (int i=0; i<NUM_PARTIALS; ++i) {
         phase[i] = 0;
         phaseIncrement[i] = freq*(i+1)*TABLE_SIZE / sr;
@@ -21,6 +22,8 @@ void ofApp::setup(){
         }
 
     }
+    
+    updateDeltaTime /= 1.0;
 }
 
 //--------------------------------------------------------------
@@ -34,21 +37,29 @@ void ofApp::draw(){
     // convert nyNumber into 3 substrings
     s << std::fixed << std::setprecision(10) << myNumber*4.0;
     myPreString = s.str();
-    
-    myString1 = myPreString.substr(0, 4);
-    myString2 = myPreString.substr(4, 3);
-    myString3 = myPreString.substr(7, 4);
-    
-    // get width of strings
-    sWidth1 = myFont.getStringBoundingBox(myString1, ofGetWidth()*0.5, ofGetHeight()*0.3).getWidth();
-    sWidth2 = myFont.getStringBoundingBox(myString2, ofGetWidth()*0.5, ofGetHeight()*0.625).getWidth();
-    sWidth3 = myFont.getStringBoundingBox(myString3, ofGetWidth()*0.5, ofGetHeight()*0.95).getWidth();
-    
-    // draw strings
-    ofSetColor(200, 180, 100);
-    myFont.drawString(myString1, ofGetWidth()*0.5 - sWidth1*0.5, ofGetHeight()*0.3);
-    myFont.drawString(myString2, ofGetWidth()*0.5 - sWidth2*0.5, ofGetHeight()*0.625);
-    myFont.drawString(myString3, ofGetWidth()*0.5 - sWidth3*0.5, ofGetHeight()*0.95);
+
+    // draw the digits
+    int lineIndex = 0;
+    int spaceScalerIndex = 0;
+    int place = 1;
+    for (int i=0; i<NUM_PARTIALS+1; ++i) {
+        float colorScaler;
+        myDigit[i] = myPreString.substr(i,1);
+        if (myDigit[i] != ".") {
+            colorScaler = stof(myDigit[i])*0.1;
+            spaceScalerIndex = 10;
+        } else {
+            colorScaler = 1.0;
+            spaceScalerIndex = i;
+        }
+        ofSetColor(255*colorScaler, 180*colorScaler, 100*colorScaler);
+        myFont.drawString(myDigit[i], place*fontSize*0.8, ofGetHeight()*lineSpacing[lineIndex]);
+        ++place;
+        if (i == 3 || i == 6) {
+            ++lineIndex;
+            place = 1;
+        }
+    }
     
     // clear stringstream
     s.str("");
@@ -135,7 +146,8 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
         n+=2;
         ofResetElapsedTimeCounter();
     }
-    
+
+    // increment phase for each partial and add to output
     for (int i=0; i<bufferSize*nChannels; i+=2) {
         for (int j=0; j<NUM_PARTIALS; ++j) {
             while (phase[j] >= TABLE_SIZE) {
