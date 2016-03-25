@@ -34,10 +34,22 @@ class ofApp : public ofBaseApp{
         int n = 1;
         int sign = -1;
         int iteration = 0;
-        float updateFrequency = 1000.0/8.75;
-        float timeNow;
+        double updateDeltaTime = 1000.0/8.75;
+        double timeNow;
     
-        std::stringstream s;
+        const static int TABLE_SIZE = 4096;
+        const static int NUM_PARTIALS = 10;
+        int sr = 44100;
+        float sinBuf[TABLE_SIZE];
+        float phase[NUM_PARTIALS];
+        float phaseIncrement[NUM_PARTIALS];
+        string myDigit[NUM_PARTIALS];
+        float myDigitWidth[NUM_PARTIALS];
+        float partialAmp[NUM_PARTIALS];
+        char thisAmp[12];
+        float freq = 8.75*9;
+    
+        std::stringstream s, s2;
         std::string myPreString, myString1, myString2, myString3;
     
         float sWidth1, sWidth2, sWidth3;

@@ -8,8 +8,19 @@ void ofApp::setup(){
     ofBackground(30, 30, 30);
     fontSize = int(ofGetHeight()*0.25);
     myFont.load("Futura-Medium.ttf", fontSize);
-    ofSoundStreamSetup(2, 0);
 
+    ofSoundStreamSetup(2, 0);
+    for (int i=0; i<NUM_PARTIALS; ++i) {
+        phase[i] = 0;
+        phaseIncrement[i] = freq*(i+1)*TABLE_SIZE / sr;
+    }
+    // fill table with square wave
+    for (int j=0; j<TABLE_SIZE; ++j) {
+        for (int i=1; i<21; i+=2) {
+            sinBuf[j] += sin((float(j)/float(TABLE_SIZE))*2*i*M_PI)*(1.0/(i+1))*0.5;
+        }
+
+    }
 }
 
 //--------------------------------------------------------------
@@ -23,6 +34,7 @@ void ofApp::draw(){
     // convert nyNumber into 3 substrings
     s << std::fixed << std::setprecision(10) << myNumber*4.0;
     myPreString = s.str();
+    
     myString1 = myPreString.substr(0, 4);
     myString2 = myPreString.substr(4, 3);
     myString3 = myPreString.substr(7, 4);
@@ -106,14 +118,38 @@ double ofApp::approxPi(double prev_value, int n) {
 
 //--------------------------------------------------------------
 void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
+    string thisAmp;
     // approximate pi
     timeNow = ofGetElapsedTimeMillis();
-    if (fmod(timeNow, updateFrequency) < 5) {
+    if (fmod(timeNow, updateDeltaTime) < 5) {
         myNumber = approxPi(myNumber, n);
+        
+//        printToConsole();
+        
+        // extract partial amplitudes
+        partialAmp[0] = stoi(myPreString.substr(0,1));
+        for (int i=2; i<NUM_PARTIALS; ++i) {
+            partialAmp[i] = stoi(myPreString.substr(i,1));
+        }
         ++iteration;
         n+=2;
-//        printToConsole();
         ofResetElapsedTimeCounter();
+    }
+    
+    for (int i=0; i<bufferSize*nChannels; i+=2) {
+        for (int j=0; j<NUM_PARTIALS; ++j) {
+            while (phase[j] >= TABLE_SIZE) {
+                phase[j] -= TABLE_SIZE;
+            }
+            while (phase[j] < 0) {
+                phase[j] += TABLE_SIZE;
+            }
+            
+            float sample = sinBuf[int(phase[j])]*partialAmp[j];
+            output[i] += sample;
+            output[i+1] += sample;
+            phase[j] += phaseIncrement[j];
+        }
     }
 }
 
@@ -122,6 +158,6 @@ void ofApp::printToConsole() {
     std::cout
         << "Iteration: " << iteration
         << "\tValue: " << myNumber*4.0
-        << "\tupdate frequency: " << float(1000.0/ timeNow) << " Hz"
+        << "\tupdate frequency: " << double(1000.0/ timeNow) << " Hz"
         << std::endl;
 }
