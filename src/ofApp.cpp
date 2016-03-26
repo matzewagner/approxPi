@@ -5,10 +5,14 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofBackground(30, 30, 30);
+    
+    ofSetBackgroundColor(0, 0, 0);
     fontSize = int(ofGetHeight()*0.25);
     myFont.load("Futura-Medium.ttf", fontSize);
+    windowIndexFont.load("Futura-Medium.ttf", 16);
 
+    fbo.allocate(450, 450);
+    
     ofSoundStreamSetup(2, 0);
     // set values for incrementing the different partials
     for (int i=0; i<NUM_PARTIALS; ++i) {
@@ -18,53 +22,89 @@ void ofApp::setup(){
     // fill table with square wave
     for (int j=0; j<TABLE_SIZE; ++j) {
         for (int i=1; i<21; i+=2) {
-            sinBuf[j] += sin((float(j)/float(TABLE_SIZE))*2*i*M_PI)*(1.0/(i+1))*0.5;
+            sinBuf[j] += sin((float(j)/float(TABLE_SIZE))*2*i*M_PI)*(1.0/i)*0.5;
         }
-
     }
     
-    updateDeltaTime /= 1.0;
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
-
+void ofApp::setupW2() {
+    ofBackground(BGColor, BGColor, BGColor);
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::setupW3() {
+    ofBackground(BGColor, BGColor, BGColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::setupW4() {
+    ofBackground(BGColor, BGColor, BGColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::setupW5() {
+    ofBackground(BGColor, BGColor, BGColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::setupW6() {
+    ofBackground(BGColor, BGColor, BGColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::update() {
+    ofSetBackgroundColor(BGColor, BGColor, BGColor);
     
     // convert nyNumber into 3 substrings
     s << std::fixed << std::setprecision(10) << myNumber*4.0;
     myPreString = s.str();
-
-    // draw the digits
-    int lineIndex = 0;
-    int spaceScalerIndex = 0;
-    int place = 1;
-    for (int i=0; i<NUM_PARTIALS+1; ++i) {
-        float colorScaler;
-        myDigit[i] = myPreString.substr(i,1);
-        if (myDigit[i] != ".") {
-            colorScaler = stof(myDigit[i])*0.1;
-            spaceScalerIndex = 10;
-        } else {
-            colorScaler = 1.0;
-            spaceScalerIndex = i;
-        }
-        ofSetColor(255*colorScaler, 180*colorScaler, 100*colorScaler);
-        myFont.drawString(myDigit[i], place*fontSize*0.8, ofGetHeight()*lineSpacing[lineIndex]);
-        ++place;
-        if (i == 3 || i == 6) {
-            ++lineIndex;
-            place = 1;
-        }
-    }
     
     // clear stringstream
     s.str("");
     s.clear();
     
+    // write to frame buffer object
+    fbo.begin();
+    ofClear(0, 0, 0, 0);
+    drawDigits();
+    fbo.end();
+}
+
+//--------------------------------------------------------------
+void ofApp::draw(){
+    fbo.draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::drawW2(ofEventArgs & args) {
+    ofBackground(BGColor, BGColor, BGColor);
+    fbo.draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::drawW3(ofEventArgs & args) {
+    ofBackground(BGColor, BGColor, BGColor);
+    fbo.draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::drawW4(ofEventArgs & args) {
+    ofBackground(BGColor, BGColor, BGColor);
+    fbo.draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::drawW5(ofEventArgs & args) {
+    ofBackground(BGColor, BGColor, BGColor);
+    fbo.draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::drawW6(ofEventArgs & args) {
+    ofBackground(BGColor, BGColor, BGColor);
+    fbo.draw(0,0);
 }
 
 //--------------------------------------------------------------
@@ -89,6 +129,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
+
 }
 
 //--------------------------------------------------------------
@@ -156,8 +197,8 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
             while (phase[j] < 0) {
                 phase[j] += TABLE_SIZE;
             }
-            
-            float sample = sinBuf[int(phase[j])]*partialAmp[j];
+        
+            float sample = sinBuf[int(phase[j])]*partialAmp[j]*0.1;
             output[i] += sample;
             output[i+1] += sample;
             phase[j] += phaseIncrement[j];
@@ -170,6 +211,32 @@ void ofApp::printToConsole() {
     std::cout
         << "Iteration: " << iteration
         << "\tValue: " << myNumber*4.0
-        << "\tupdate frequency: " << double(1000.0/ timeNow) << " Hz"
+        << "\tupdate frequency: " << double(1000.0/timeNow) << " Hz"
         << std::endl;
+}
+
+//--------------------------------------------------------------
+void ofApp::drawDigits() {
+    
+    // draw the digits
+    int lineIndex = 0;
+    int place = 1;
+    
+    for (int i=0; i<NUM_PARTIALS+1; ++i) {
+        float colorScaler;
+        myDigit[i] = myPreString.substr(i,1);
+        if (myDigit[i] != ".") {
+            colorScaler = stof(myDigit[i])*0.1;
+        } else {
+            colorScaler = 1.0;
+        }
+        ofSetColor(255*colorScaler, 180*colorScaler, 100*colorScaler);
+        myFont.drawString(myDigit[i], place*fontSize*0.8, ofGetHeight()*lineSpacing[lineIndex]);
+        ++place;
+        if (i == 3 || i == 6) {
+            ++lineIndex;
+            place = 1;
+        }
+    }
+
 }
