@@ -36,7 +36,7 @@ public:
 		can access it in a thread-safe manner */
 	std::atomic<double> currentApprox;	
 
-	long int currentSample;
+	std::atomic<long int> currentSample;
 
 	float currentPartialAmps[APPROXIMATOR_PRECISION];
 
@@ -65,6 +65,7 @@ public:
 	//! Returns digits of a number with precision APPROXIMATOR_PRECISION
 	/*!
 		Return type is an array of length APPROXIMATOR_PRECISION
+		TODO: Looke precarious becuase it is returning the address stack of local variable. Check if this is a good way to do this. 
 	*/
 	int* getDigits(double number)
 	{
