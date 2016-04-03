@@ -3,7 +3,6 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     phase = 0;
-    current_sample = 0;
     ofSoundStreamSetup(2, 0); // 2 output channels (stereo), 0 input channels
 
 }
@@ -11,9 +10,8 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 
-    cout << approximator.currentApprox << endl;
-    cout << current_sample << " " << approximator.currentSample << endl << endl;
-
+    float displayNumber = approximator.currentApprox;
+    std::cout << numberToString(displayNumber) << std::endl;
 }
 
 //--------------------------------------------------------------
