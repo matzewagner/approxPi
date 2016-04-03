@@ -1,12 +1,10 @@
-Changelist:
-===========
+TODO:
+=====
 
-+ Added a ApproximatePi.h class to take care of approximation, and compute the partial amplitudes.
-+ Fixed approximation math. Need to multiply 4 with the fractions
-+ Added Function to compute amplitudes of all the partials. 
-
-
+* Unable to load the 8-channel wav file using ofSoundFilePlayer. 
+* Make the `drawdigits()` function into `drawdigits(float number)` so that it doesn't depend on shared data (avoiding errors). Then, use this function in the draw function. 
 
 Bugs:
 ====
-* Crashes upon quit. Suspect it has something to do with the mulitiple windows' threads not being terminated properly.
+* [liveAudio] Crashes upon quit. Suspect it has something to do with the mulitiple windows' threads not being terminated properly.
+* [Approximator_dev] Crashes upon failed file load.

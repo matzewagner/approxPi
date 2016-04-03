@@ -3,31 +3,50 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     phase = 0;
-    ofSoundStreamSetup(2, 0); // 2 output channels (stereo), 0 input channels
-
+    ofSoundStreamSetup(8, 0); // 2 output channels (stereo), 0 input channels
+    audioPlayer.load("ApproximatingPi_8channel.wav");
+    if(audioPlayer.isLoaded())
+    {
+        audioPlayer.play();
+    }
+    else
+    {
+        std::cout << "Soundfile Not Loaded GET IT TOGETHER" << endl;
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
-    float displayNumber = approximator.currentApprox;
-    std::cout << numberToString(displayNumber) << std::endl;
 }
 
 //--------------------------------------------------------------
 void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
     for(int i = 0; i < bufferSize * nChannels; i += nChannels) {
-        float sample = sin(phase); // generating a sine wave sample
-        output[i] = sample; // writing to the left channel
-        output[i+1] = sample; // writing to the right channel
-        phase += 0.05;
-        approximator.tick();
+        // float sample = sin(phase); // generating a sine wave sample
+        // output[i] = sample; // writing to the left channel
+        // output[i+1] = sample; // writing to the right channel
+        // phase += 0.05;
+
+        approximator.tick(); // A sample-accurate tick
+    }
+}
+
+//--------------------------------------------------------------
+void ofApp::exit(){
+    if(audioPlayer.isLoaded())
+    {
+        audioPlayer.stop();
+        audioPlayer.unload();        
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    // Get latest approximation:
+    float latest_approximation = approximator.currentApprox;
+    string number = numberToString(latest_approximation);
 
+    // TODO: Draw it on multiple screens.
 }
 
 //--------------------------------------------------------------
