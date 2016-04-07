@@ -30,4 +30,8 @@ class ofApp : public ofBaseApp{
 		void audioOut( float * output, int bufferSize, int nChannels );
 		double phase;
 		ofSoundPlayer audioPlayer;
+
+		void drawDigits();
+	        ofFbo fbo;		// Needed for drawing
+
 };

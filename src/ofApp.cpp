@@ -17,11 +17,22 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    // Get latest approximation:
+    float latest_approximation = approximator.currentApprox;
+
+    // write to frame buffer object
+    fbo.begin();
+    ofClear(0, 0, 0, 0);
+    drawDigits(latest_approximation);
+    fbo.end();
 }
 
 //--------------------------------------------------------------
 void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
     for(int i = 0; i < bufferSize * nChannels; i += nChannels) {
+        //TODO: Playback 6 channel file. 
+        //TODO: Account for sampledroppping for other channels. 
+
         // float sample = sin(phase); // generating a sine wave sample
         // output[i] = sample; // writing to the left channel
         // output[i+1] = sample; // writing to the right channel
@@ -42,9 +53,7 @@ void ofApp::exit(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    // Get latest approximation:
-    float latest_approximation = approximator.currentApprox;
-    string number = numberToString(latest_approximation);
+    fbo.draw(0,0);
 
     // TODO: Draw it on multiple screens.
 }
@@ -102,4 +111,12 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
+}
+
+//--------------------------------------------------------------
+void ofApp::drawDigits(float number){
+    // draw the digits
+    string digits = numberToString(number);
+
+    //TODO: port this function from liveAudio brach
 }
