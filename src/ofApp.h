@@ -31,7 +31,7 @@ class ofApp : public ofBaseApp{
 		double phase;
 		ofSoundPlayer audioPlayer;
 
-		void drawDigits();
+		void drawDigits(float number);
 	        ofFbo fbo;		// Needed for drawing
 
 };

@@ -40,6 +40,8 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
 
         approximator.tick(); // A sample-accurate tick
     }
+    cout << approximator.currentApprox << endl;
+
 }
 
 //--------------------------------------------------------------
@@ -119,4 +121,29 @@ void ofApp::drawDigits(float number){
     string digits = numberToString(number);
 
     //TODO: port this function from liveAudio brach
+    int lineIndex = 0;
+    int place = 1;
+
+    for (int i=0; i<APPROXIMATOR_PRECISION+1; i++)
+    {
+        cout << digits[i] << " " << endl;
+    }
+    cout << endl;
+    
+    // for (int i=0; i<APPROXIMATOR_PRECISION+1; ++i) {
+    //     float colorScaler;
+    //     myDigit[i] = number.substr(i,1);
+    //     if (myDigit[i] != ".") {
+    //         colorScaler = stof(myDigit[i])*0.1;
+    //     } else {
+    //         colorScaler = 1.0;
+    //     }
+    //     ofSetColor(255*colorScaler, 180*colorScaler, 100*colorScaler);
+    //     myFont.drawString(myDigit[i], place*fontSize*0.8, ofGetHeight()*lineSpacing[lineIndex]);
+    //     ++place;
+    //     if (i == 3 || i == 6) {
+    //         ++lineIndex;
+    //         place = 1;
+    //     }
+    // }
 }
