@@ -4,6 +4,7 @@
 #include "ApproximatePi.h"
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 class ofApp : public ofBaseApp{
@@ -24,14 +25,20 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		void exit();
+		void audioOut( float * output, int bufferSize, int nChannels );
+		void drawDigits(float number);
+
 
 	private:
+		// For doing the approximations
 		ApproximatePi approximator;
-		void audioOut( float * output, int bufferSize, int nChannels );
-		double phase;
-		ofSoundPlayer audioPlayer;
 
-		void drawDigits(float number);
-	        ofFbo fbo;		// Needed for drawing
+		// TODO: Include a soundfile object 
 
+        // For Drawing Digits
+	    ofFbo fbo;
+		int BGColor = 30;
+        ofTrueTypeFont myFont;
+        int fontSize;
+        float lineSpacing[3] = {0.3, 0.625, 0.95};
 };
