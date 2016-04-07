@@ -11,6 +11,7 @@ void ofApp::setup(){
     myFont.load("Futura-Medium.ttf", fontSize);
     windowIndexFont.load("Futura-Medium.ttf", 16);
 
+    // allocate frame buffer object
     fbo.allocate(450, 450);
     
     ofSoundStreamSetup(2, 0);
@@ -173,7 +174,7 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
     string thisAmp;
     // approximate pi
     timeNow = ofGetElapsedTimeMillis();
-    if (fmod(timeNow, updateDeltaTime) < 5) {
+    if (fmod(timeNow, updateDeltaTime) < 10) {
         myNumber = approxPi(myNumber, n);
         
 //        printToConsole();
@@ -185,7 +186,7 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
         }
         ++iteration;
         n+=2;
-        ofResetElapsedTimeCounter();
+//        ofResetElapsedTimeCounter();
     }
 
     // increment phase for each partial and add to output
@@ -198,7 +199,7 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
                 phase[j] += TABLE_SIZE;
             }
         
-            float sample = sinBuf[int(phase[j])]*partialAmp[j]*0.1;
+            float sample = sinBuf[int(phase[j])]*partialAmp[j]*0.01;
             output[i] += sample;
             output[i+1] += sample;
             phase[j] += phaseIncrement[j];
