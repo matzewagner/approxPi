@@ -2,6 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    fontSize = 80;
     myFont.load("Futura-Medium.ttf", fontSize);
     fbo.allocate(450, 450);
 
