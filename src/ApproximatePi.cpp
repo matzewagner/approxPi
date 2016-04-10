@@ -2,7 +2,7 @@
 
 int* getDigits(double number)
 {
-	int digit[APPROXIMATOR_PRECISION];
+    static int digit[APPROXIMATOR_PRECISION] {0};
 	for(int i=0; i<APPROXIMATOR_PRECISION; i++)
 	{
 		digit[i] = number;

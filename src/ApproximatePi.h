@@ -38,8 +38,8 @@ public:
 	//! Current approximation of Pi
 	/*! This is made atomic to ensure that any other visuals threads 
 		can access it in a thread-safe manner */
-	std::atomic<double> currentApprox;	
-
+	std::atomic<double> currentApprox;
+    
 	std::atomic<long int> currentSample;
 
 	float currentPartialAmps[APPROXIMATOR_PRECISION];

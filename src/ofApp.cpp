@@ -2,21 +2,20 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    fontSize = 80;
+    fontSize = 100;
     myFont.load("Futura-Medium.ttf", fontSize);
     fbo.allocate(450, 450);
 
-    ofSoundStreamSetup(6, 0); // 6 output channels (stereo), 0 input channels
+    ofSoundStreamSetup(2, 0); // 6 output channels (stereo), 0 input channels
     ofSoundStreamStart();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     // Get latest approximation:
-    float latest_approximation = approximator.currentApprox;
+    double latest_approximation = approximator.currentApprox.load();
 
     ofSetBackgroundColor(BGColor, BGColor, BGColor);
-
 
     // write to frame buffer object
     fbo.begin();
@@ -28,7 +27,6 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
     for(int i = 0; i < bufferSize * nChannels; i += nChannels) {
-
         approximator.tick(); // A sample-accurate approximator tick
     }
 }
@@ -41,8 +39,9 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void ofApp::drawDigits(float number){
-    int* digits = getDigits(number);    // Get the digits
+void ofApp::drawDigits(double number){
+
+    int* digits = getDigits(M_PI);    // Get the digits
 
     int lineIndex = 0;
     int place = 1;
@@ -60,11 +59,11 @@ void ofApp::drawDigits(float number){
             ++place;
         }
 
-        colorScaler = digits[i];
+        colorScaler = digits[i]*0.1;
         ofSetColor(255*colorScaler, 180*colorScaler, 100*colorScaler);
         myFont.drawString(to_string(digits[i]), place*fontSize*0.8, ofGetHeight()*lineSpacing[lineIndex]);
         ++place;
-        if (i == 3 || i == 6) 
+        if (i == 2 || i == 5)
         {
             ++lineIndex;
             place = 1;

@@ -26,7 +26,7 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		void exit();
 		void audioOut( float * output, int bufferSize, int nChannels );
-		void drawDigits(float number);
+		void drawDigits(double number);
 
 
 	private:
