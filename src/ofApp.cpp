@@ -2,9 +2,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    fontSize = 100;
+    fontSize = WINDOW_HEIGHT*0.25;
     myFont.load("Futura-Medium.ttf", fontSize);
-    fbo.allocate(450, 450);
+    fbo.allocate(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     ofSoundStreamSetup(2, 0); // 6 output channels (stereo), 0 input channels
     ofSoundStreamStart();
@@ -13,7 +13,7 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     // Get latest approximation:
-    double latest_approximation = approximator.currentApprox.load();
+    double latest_approximation = approximator.currentApprox;
 
     ofSetBackgroundColor(BGColor, BGColor, BGColor);
 
@@ -41,7 +41,7 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::drawDigits(double number){
 
-    int* digits = getDigits(M_PI);    // Get the digits
+    int* digits = getDigits(number);    // Get the digits
 
     int lineIndex = 0;
     int place = 1;
@@ -63,7 +63,7 @@ void ofApp::drawDigits(double number){
         ofSetColor(255*colorScaler, 180*colorScaler, 100*colorScaler);
         myFont.drawString(to_string(digits[i]), place*fontSize*0.8, ofGetHeight()*lineSpacing[lineIndex]);
         ++place;
-        if (i == 2 || i == 5)
+        if (i == 2 || i == 6)
         {
             ++lineIndex;
             place = 1;
