@@ -17,6 +17,5 @@ int main( ){
     shared_ptr<ofApp> mainApp(new ofApp);
     
     ofRunApp(mainWindow, mainApp);
-	ofRunApp( new ofApp());
-
+	ofRunMainLoop();
 }
