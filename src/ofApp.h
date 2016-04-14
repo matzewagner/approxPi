@@ -10,6 +10,7 @@
 #include <string>
 using namespace std;
 
+
 class ofApp : public ofBaseApp{
 	public:
 		void setup();
@@ -44,4 +45,5 @@ class ofApp : public ofBaseApp{
         ofTrueTypeFont myFont;
         int fontSize;
         float lineSpacing[3] = {0.3, 0.625, 0.95};
+
 };

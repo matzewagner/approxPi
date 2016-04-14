@@ -13,7 +13,7 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     // Get latest approximation:
-    double latest_approximation = approximator.currentApprox;
+    double latest_approximation = approximator.currentApproxTransposed;
 
     ofSetBackgroundColor(BGColor, BGColor, BGColor);
 
