@@ -40,7 +40,7 @@ void ofApp::update(){
 void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
     for(int i = 0; i < bufferSize * nChannels; i += nChannels) {
         if (bufReader%560 == 0)
-            approximator.tick(); // A sample-accurate approximator tick
+            approximator.approximate(); // A sample-accurate approximator tick
         
         float sample = buf[bufReader];
         output[i] = sample;
