@@ -1,13 +1,15 @@
 #pragma once
 
-#define WINDOW_WIDTH 1024
-#define WINDOW_HEIGHT 768
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 1024
 
 #include "ofMain.h"
 #include "ApproximatePi.h"
 
 #include <iostream>
 #include <string>
+#include <sndfile.hh>
+
 using namespace std;
 
 class ofApp : public ofBaseApp{
@@ -36,7 +38,14 @@ class ofApp : public ofBaseApp{
 		// For doing the approximations
 		ApproximatePi approximator;
 
-		// TODO: Include a soundfile object 
+		// TODO: Include a soundfile object
+        const char* fName = "data/appirox009.wav";
+        SNDFILE *sf;
+        SF_INFO info;
+    
+        int counter = 0;
+        float *buf;
+        int bufReader = 0;
 
         // For Drawing Digits
 	    ofFbo fbo;

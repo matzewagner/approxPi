@@ -1,13 +1,25 @@
 #include "ofApp.h"
 
+
 //--------------------------------------------------------------
 void ofApp::setup(){
+
+    sf = sf_open(fName, SFM_READ, &info);
+    if (sf==NULL)
+        printf("Failed to open audio file.\n");
+    
+    int nSamples = info.frames * info.channels;
+    buf = (float*)malloc(nSamples*sizeof(float));
+    
+    sf_read_float(sf, buf, nSamples);
+    
     fontSize = WINDOW_HEIGHT*0.25;
     myFont.load("Futura-Medium.ttf", fontSize);
     fbo.allocate(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     ofSoundStreamSetup(2, 0); // 6 output channels (stereo), 0 input channels
-    ofSoundStreamStart();
+//    ofSoundStreamStart();
+    
 }
 
 //--------------------------------------------------------------
@@ -15,7 +27,7 @@ void ofApp::update(){
     // Get latest approximation:
     double latest_approximation = approximator.currentApprox;
 
-    ofSetBackgroundColor(BGColor, BGColor, BGColor);
+    ofSetBackgroundColor(BGColor+7, BGColor, BGColor);
 
     // write to frame buffer object
     fbo.begin();
@@ -27,8 +39,15 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
     for(int i = 0; i < bufferSize * nChannels; i += nChannels) {
-        approximator.tick(); // A sample-accurate approximator tick
+        if (bufReader%560 == 0)
+            approximator.tick(); // A sample-accurate approximator tick
+        
+        float sample = buf[bufReader];
+        output[i] = sample;
+        output[i+1] = sample;
+        ++bufReader;
     }
+
 }
 
 //--------------------------------------------------------------
@@ -74,6 +93,7 @@ void ofApp::drawDigits(double number){
 //--------------------------------------------------------------
 void ofApp::exit(){
     ofSoundStreamClose();
+    sf_close(sf);
 }
 
 //--------------------------------------------------------------
