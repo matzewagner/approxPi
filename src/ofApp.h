@@ -41,7 +41,9 @@ class ofApp : public ofBaseApp{
 		ApproximatePi approximator;
 
 		// TODO: Include a soundfile object
-        const char* fName = "data/appirox009.wav";
+//        const char* fName = "data/appirox009.wav";
+        char* fName = "data/ApproximatingPi_8channel.wav";
+        WavReader audiofile;
     
         int counter = 0;
         float *buf;
@@ -50,8 +52,11 @@ class ofApp : public ofBaseApp{
         // For Drawing Digits
 	    ofFbo fbo;
 		int BGColor = 30;
-        ofTrueTypeFont myFont;
+        ofTrueTypeFont myNumberFont, myPiFont;
+        
         int fontSize;
         float lineSpacing[3] = {0.3, 0.625, 0.95};
+    
+        ofImage piTest;
 
 };
