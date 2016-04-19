@@ -9,7 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <WAVRead.h>
+#include "WavReader.hpp"
 
 using namespace std;
 
@@ -38,7 +38,7 @@ class ofApp : public ofBaseApp{
 
 	private:
 		// For doing the approximations
-		ApproximatePi approximator;
+		ApproximatePi approximator9;
 
 		// TODO: Include a soundfile object
 //        const char* fName = "data/appirox009.wav";

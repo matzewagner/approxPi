@@ -11,12 +11,11 @@
 #define APPROXIMATOR_PRECISION 10
 const int TRANSPOSITION_FACTOR[] = { 9, 28, 50, 73, 98, 123, 149, 175, 202, 229, 257, 285, 314, 343, 372, 402};
 
-//! \brief Returns digits of a number with precision APPROXIMATOR_PRECISION
+//! \brief Gets the digits of a number with precision APPROXIMATOR_PRECISION. Stores in digits
 /*!
-	Return type is an array of length APPROXIMATOR_PRECISION
-	TODO: Looks precarious becuase it is returning the address stack of local variable. Check if this is a good way to do this. 
+	Return type is an array of length APPROXIMATOR_PRECISION. 
 */
-int* getDigits(double number);
+void getDigits(double number, int digits[]);
 
 //! \brief Returns the string form of a number
 std::string numberToString(double number);
@@ -32,40 +31,34 @@ class ApproximatePi
 {
 public:
 	// TODO
-	ApproximatePi(int numChannels=0);
+	ApproximatePi(int transpose_factor = 1);
 
-	//! Sign of the latest term added (or subtracted) for the latest approximation
-	/* Not intended for use external to this class */
-	int currentSign;
+	// TODO
+	void setTransposeFactor(int transpose_factor);
 
-	//! \brief TODO
-	/*! These are the approximations for each of the successive transpositions. 
-		The 0th element is the un-transposed current approximation.
-
-		The elements are atomic to ensure that any other visuals threads 
-		can access it in a thread-safe manner 
+	//! \brief Gets the current approximation of Pi.
+	/*! This is made into an atomic type so that you can access it in a thread-safe way.
 	*/
-	std::atomic<double> currentApproxTransposed;
-
-	float currentPartialAmps[APPROXIMATOR_PRECISION];
+	std::atomic<double> currentApprox;
 
 	//! \brief Moves forward in time by one sample. 
+	/*! Makes an apprximation at appropriate times based on the transposition factor given. 
+	*/
 	void tick();
 
+	//! Performs one step in the approximation. Do not use unless you want to time the approximations yourself. 
 	void approximate();
 
-	//! Computes the amplitudes for all the partials based on currentApprox and stores it in currentPartialAmps[]
-	void computePartialAmplitudes(void);
+	//! \brief Computes the amplitudes for all the partials based on currentApprox and stores it in output_array
+	void computePartialAmps(double number, float output_array[APPROXIMATOR_PRECISION]);
 
 private:
-	//! \brief Each convergence step takes places after 5040 samples of audio have elapsed. This is used internally to keep track of how many samples have passed. 
-	int tick_counter = 1;
+	int sample_drop;
+	int ticker = 0;
 	long int currentApproxIndex;
-	int nChannels;
 
-	//! \brief Current approximation of Pi. This depends on how fast you are approximating.
-	double currentApprox;	
+	//! Sign of the latest term added (or subtracted) for the latest approximation
+	int currentSign;
 };
 
 #endif
-

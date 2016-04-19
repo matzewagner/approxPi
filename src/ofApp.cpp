@@ -6,6 +6,8 @@ void ofApp::setup(){
 
     audiofile.open_file(fName);
     
+    approximator9.setTransposeFactor(TRANSPOSITION_FACTOR[0]);
+    
     fontSize = WINDOW_HEIGHT*0.25;
     myNumberFont.load("Futura-Medium.ttf", fontSize);
     myPiFont.load("Symbol.ttf", fontSize);
@@ -13,14 +15,13 @@ void ofApp::setup(){
     fbo.allocate(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     ofSoundStreamSetup(2, 0); // 6 output channels (stereo), 0 input channels
-//    ofSoundStreamStart();
     
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     // Get latest approximation:
-    double latest_approximation = approximator.currentApproxTransposed;
+    double latest_approximation = approximator9.currentApprox;
 
     ofSetBackgroundColor(BGColor+7, BGColor, BGColor);
 
@@ -43,13 +44,12 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
     for(int i = 0; i < bufferSize * nChannels; i += nChannels) {
-        approximator.tick(); // A sample-accurate approximator tick
+        approximator9.tick(); // A sample-accurate approximator tick
         
         float sample = audiofile.next_sample();
 //        float sample = 0;
         output[i] = sample;
         output[i+1] = sample;
-//        ++bufReader;
     }
 
 }
@@ -64,7 +64,8 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::drawDigits(double number){
 
-    int* digits = getDigits(number);    // Get the digits
+    int digits[APPROXIMATOR_PRECISION];
+    getDigits(number, digits);    // Get the digits
 
     int lineIndex = 0;
     int place = 2;
