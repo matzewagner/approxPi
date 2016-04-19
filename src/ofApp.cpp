@@ -1,17 +1,39 @@
 #include "ofApp.h"
 
-
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    sf = sf_open(fName, SFM_READ, &info);
-    if (sf==NULL)
-        printf("Failed to open audio file.\n");
+    const double ONEOVERSHORTMAX = 1.0/32768;
     
-    int nSamples = info.frames * info.channels;
-    buf = (float*)malloc(nSamples*sizeof(float));
+    char ChunkID[4], Format[4], Subchunk1ID[4],Subchunk2ID[4];
+    int ChunkSize,Subchunk1Size, SampleRate, ByteRate,Subchunk2Size;
+    short AudioFormat, NumChannels, BlockAlign, BitsPerSample;
     
-    sf_read_float(sf, buf, nSamples);
+    short *Data;
+    // Read the wave file
+    FILE *fhandle=fopen(fName,"rb");
+    fread(ChunkID,1,4,fhandle);
+    fread(&ChunkSize,4,1,fhandle);
+    fread(Format,1,4,fhandle);
+    fread(Subchunk1ID,1,4,fhandle);
+    fread(&Subchunk1Size,4,1,fhandle);
+    fread(&AudioFormat,2,1,fhandle);
+    fread(&NumChannels,2,1,fhandle);
+    fread(&SampleRate,4,1,fhandle);
+    fread(&ByteRate,4,1,fhandle);
+    fread(&BlockAlign,2,1,fhandle);
+    fread(&BitsPerSample,2,1,fhandle);
+    fread(&Subchunk2ID,1,4,fhandle);
+    fread(&Subchunk2Size,4,1,fhandle);
+    int nSamples = Subchunk2Size/(BitsPerSample/8);
+    Data = new short[nSamples];
+    buf = new float[nSamples];
+    fread(Data, BitsPerSample/8, nSamples, fhandle);
+    
+    fclose(fhandle);
+    
+    for (int i=0; i<nSamples; ++i)
+        buf[i] = Data[i] * ONEOVERSHORTMAX;
     
     fontSize = WINDOW_HEIGHT*0.25;
     myFont.load("Futura-Medium.ttf", fontSize);
@@ -42,6 +64,7 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
         approximator.tick(); // A sample-accurate approximator tick
         
         float sample = buf[bufReader];
+//        float sample = 0;
         output[i] = sample;
         output[i+1] = sample;
         ++bufReader;
@@ -92,7 +115,6 @@ void ofApp::drawDigits(double number){
 //--------------------------------------------------------------
 void ofApp::exit(){
     ofSoundStreamClose();
-    sf_close(sf);
 }
 
 //--------------------------------------------------------------

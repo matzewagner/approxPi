@@ -7,8 +7,9 @@
 #include "ApproximatePi.h"
 
 #include <iostream>
+#include <fstream>
 #include <string>
-#include <sndfile.hh>
+#include <WAVRead.h>
 
 using namespace std;
 
@@ -41,8 +42,6 @@ class ofApp : public ofBaseApp{
 
 		// TODO: Include a soundfile object
         const char* fName = "data/appirox009.wav";
-        SNDFILE *sf;
-        SF_INFO info;
     
         int counter = 0;
         float *buf;
