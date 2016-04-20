@@ -39,7 +39,7 @@ public:
         fread(&BitsPerSample,2,1,fhandle);
         fread(&Subchunk2ID,1,4,fhandle);
         fread(&Subchunk2Size,4,1,fhandle);
-        int nSamples = Subchunk2Size/(BitsPerSample/8);
+        unsigned long nSamples = Subchunk2Size/(BitsPerSample/8);
         Data = new short[nSamples];
         buf = new float[nSamples];
         fread(Data, BitsPerSample/8, nSamples, fhandle);
@@ -54,6 +54,11 @@ public:
     float next_sample(void)
     {
         return buf[bufReader++];
+    }
+    
+    int getNumChannels(void)
+    {
+        return NumChannels;
     }
     
 private:

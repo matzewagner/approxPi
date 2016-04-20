@@ -42,7 +42,6 @@ class ofApp : public ofBaseApp{
 		// For doing the approximations
 		ApproximatePi approximator[6];
 
-		// TODO: Include a soundfile object
 //        const char* fName = "data/appirox009.wav";
         string fName = "data/ApproximatingPi_8channel.wav";
         WavReader audiofile;
@@ -59,6 +58,6 @@ class ofApp : public ofBaseApp{
         int fontSize;
         float lineSpacing[3] = {0.3, 0.625, 0.95};
     
-        ofImage piTest;
+        ofImage piSymbol;
 
 };
