@@ -9,21 +9,22 @@
 #define WAVRead_h
 
 #include <fstream>
+#include <string>
 
 class WavReader
 {
 public:
     WavReader(void) {}
     
-    WavReader(char* file_name) :
-    file_name(file_name)
+    WavReader(std::string file_name) :
+        file_name(file_name)
 	{
         open_file(file_name);
 	}
     
-    void open_file(char* file_name)
+    void open_file(std::string file_name)
     {
-        FILE *fhandle=fopen(file_name,"rb");
+        FILE *fhandle=fopen(file_name.c_str(),"rb");
         
         fread(ChunkID,1,4,fhandle);
         fread(&ChunkSize,4,1,fhandle);
@@ -56,7 +57,7 @@ public:
     }
     
 private:
-    char* file_name;
+    std::string file_name;
     float *buf;
     short *Data;
     const double ONEOVERSHORTMAX = 1.0/32768;

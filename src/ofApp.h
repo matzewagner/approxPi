@@ -13,6 +13,8 @@
 
 using namespace std;
 
+#define NCHANNELS 2
+
 
 class ofApp : public ofBaseApp{
 	public:
@@ -38,11 +40,11 @@ class ofApp : public ofBaseApp{
 
 	private:
 		// For doing the approximations
-		ApproximatePi approximator9;
+		ApproximatePi approximator[6];
 
 		// TODO: Include a soundfile object
 //        const char* fName = "data/appirox009.wav";
-        char* fName = "data/ApproximatingPi_8channel.wav";
+        string fName = "data/ApproximatingPi_8channel.wav";
         WavReader audiofile;
     
         int counter = 0;

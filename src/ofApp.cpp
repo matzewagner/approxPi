@@ -5,8 +5,10 @@ string myPi;
 void ofApp::setup(){
 
     audiofile.open_file(fName);
-    
-    approximator9.setTransposeFactor(TRANSPOSITION_FACTOR[0]);
+
+    // Setting respective transposition factors
+    for(int i=0; i<NCHANNELS; i++)
+        approximator[i].setTransposeFactor(TRANSPOSITION_FACTOR[i]);
     
     fontSize = WINDOW_HEIGHT*0.25;
     myNumberFont.load("Futura-Medium.ttf", fontSize);
@@ -14,14 +16,14 @@ void ofApp::setup(){
     piTest.load("pi.png");
     fbo.allocate(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    ofSoundStreamSetup(2, 0); // 6 output channels (stereo), 0 input channels
+    ofSoundStreamSetup(NCHANNELS, 0);
     
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     // Get latest approximation:
-    double latest_approximation = approximator9.currentApprox;
+    double latest_approximation = approximator[0].currentApprox;
 
     ofSetBackgroundColor(BGColor+7, BGColor, BGColor);
 
@@ -44,12 +46,18 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
     for(int i = 0; i < bufferSize * nChannels; i += nChannels) {
-        approximator9.tick(); // A sample-accurate approximator tick
+        for(int chan=0; chan<nChannels; chan++)
+        {
+            approximator[chan].tick();
+            output[i+chan] = audiofile.next_sample();
+        }
         
-        float sample = audiofile.next_sample();
-//        float sample = 0;
-        output[i] = sample;
-        output[i+1] = sample;
+        // This ensures that you can read the 8-channel file correctly.
+        // Increments file pointer so that it reaches the end of the frame.
+        for(int chan=0; chan<(NCHANNELS-nChannels); chan++)
+        {
+            audiofile.next_sample();
+        }
     }
 
 }
