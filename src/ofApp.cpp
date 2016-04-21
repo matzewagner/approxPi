@@ -176,27 +176,25 @@ void ofApp::drawStatus(int wNum){
     myStatusFont.drawString(wN, xMargin, lineSpacing*1);
     
     // draw time elapsed status
-    int mins = 5, secs = 40;
-    string t_elapsed = "Time elapsed: " + to_string(mins) + ":" + to_string(secs);
+    TimeStruct dur = PiPlayer.getCurrentTime();
+    string t_elapsed = "Time elapsed: " + to_string(dur.minutes) + ":" + to_string(dur.seconds);
     myStatusFont.drawString(t_elapsed, xMargin, lineSpacing*2);
     
     // draw play/pause status
-    bool pause = false;
-    if (pause) {
-        ofSetColor(255, 0, 0);
-        myStatusFont.drawString("Pause", xMargin, lineSpacing*3);
-    } else {
+    if (PiPlayer.isPlaying()) {
         ofSetColor(0, 255, 0);
         myStatusFont.drawString("Play", xMargin, lineSpacing*3);
+
+    } else {
+        ofSetColor(255, 0, 0);
+        myStatusFont.drawString("Pause", xMargin, lineSpacing*3);
     }
     
     // draw mute status
-    bool mute = true;
-    if (mute) {
+    if (PiPlayer.isMuted()) {
         ofSetColor(255, 0, 0);
         myStatusFont.drawString("Mute", xMargin, lineSpacing*4);
     }
-    
     
 }
 
