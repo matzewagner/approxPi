@@ -13,7 +13,7 @@
 
 using namespace std;
 
-#define NCHANNELS 2
+#define NCHANNELS 6
 
 
 class ofApp : public ofBaseApp{
@@ -43,7 +43,7 @@ class ofApp : public ofBaseApp{
 		ApproximatePi approximator[6];
 
 //        const char* fName = "data/appirox009.wav";
-        string fName = "data/ApproximatingPi_8channel.wav";
+        string fName = "data/ApproxPi_8ChannelNew.wav";
         WavReader audiofile;
     
         int counter = 0;
