@@ -20,6 +20,12 @@ public:
         computeMinSecs(num_samples);
     }
     
+    TimeStruct(int in_minutes, int in_seconds)
+    {
+        minutes = in_minutes;
+        seconds = in_seconds;
+    }
+
     void computeMinSecs(unsigned long num_samples)
     {
         unsigned long total_seconds = num_samples/(sampleRate*nChannels);
@@ -32,7 +38,7 @@ public:
     {
         std::cout << "TIME = " << minutes << "min " << seconds << "seconds " << std::endl;
     }
-    
+        
     int nChannels;
     int sampleRate;
     int minutes;

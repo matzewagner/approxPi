@@ -14,6 +14,13 @@ ApproximatePi::ApproximatePi(int transpose_factor)
 	sample_drop = 5040/transpose_factor;
 }
 
+void ApproximatePi::Reset(void)
+{
+    currentApprox = 4;
+    currentApproxIndex = 0;
+    currentSign = 1;
+}
+
 void ApproximatePi::setTransposeFactor(int transpose_factor)
 {
 	sample_drop = 5040/transpose_factor;
