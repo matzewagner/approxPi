@@ -42,7 +42,6 @@ class ofApp : public ofBaseApp{
 		// For doing the approximations
 		ApproximatePi approximator[6];
 
-//        const char* fName = "data/appirox009.wav";
         string fName = "data/ApproxPi_8ChannelNew.wav";
         WavReader audiofile;
     
@@ -51,7 +50,7 @@ class ofApp : public ofBaseApp{
         int bufReader = 0;
 
         // For Drawing Digits
-	    ofFbo fbo;
+	    ofFbo fbo[NCHANNELS];
 		int BGColor = 30;
         ofTrueTypeFont myNumberFont, myPiFont;
         

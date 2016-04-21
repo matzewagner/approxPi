@@ -14,32 +14,37 @@ void ofApp::setup(){
     myNumberFont.load("Futura-Medium.ttf", fontSize);
     myPiFont.load("Symbol.ttf", fontSize);
     piSymbol.load("pi.png");
-    fbo.allocate(WINDOW_WIDTH, WINDOW_HEIGHT);
+    for (int i=0; i<NCHANNELS; ++i)
+        fbo[i].allocate(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     ofSoundStreamSetup(NCHANNELS, 0);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    // Get latest approximation:
-    double latest_approximation = approximator[0].currentApprox;
+    
+    for (int i=0; i<NCHANNELS; ++i)
+    {
+        // Get latest approximation:
+        double latest_approximation = approximator[0].currentApprox;
 
-    ofSetBackgroundColor(BGColor+7, BGColor, BGColor);
+        ofSetBackgroundColor(BGColor+7, BGColor, BGColor);
 
-    // write to frame buffer object
-    fbo.begin();
-    ofClear(0, 0, 0, 0);
-    piSymbol.draw(100, 20);
-    ofSetColor(255, 180, 100);
-    ofPushMatrix();
-    ofScale(0.7, 1.0);
-    myNumberFont.drawString("=", 520, ofGetHeight()*lineSpacing[0]-0);
-    ofPopMatrix();
-    ofPushMatrix();
-    ofTranslate(100, 0);
-    drawDigits(latest_approximation);
-    ofPopMatrix();
-    fbo.end();
+        // write to frame buffer object
+        fbo[i].begin();
+        ofClear(0, 0, 0, 0);
+        piSymbol.draw(100, 20);
+        ofSetColor(255, 180, 100);
+        ofPushMatrix();
+        ofScale(0.7, 1.0);
+        myNumberFont.drawString("=", 520, ofGetHeight()*lineSpacing[0]-0);
+        ofPopMatrix();
+        ofPushMatrix();
+        ofTranslate(100, 0);
+        drawDigits(latest_approximation);
+        ofPopMatrix();
+        fbo[i].end();
+    }
 }
 
 //--------------------------------------------------------------
@@ -63,7 +68,7 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    fbo.draw(0,0);
+    fbo[0].draw(0,0);
 
     // TODO: Draw it on multiple screens.
 }
