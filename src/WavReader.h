@@ -23,7 +23,7 @@ public:
         open_file(file_name);
 	}
     
-    void open_file(std::string file_name)
+    bool open_file(std::string file_name)
     {
         FILE *fhandle=fopen(file_name.c_str(),"rb");
         
@@ -51,17 +51,17 @@ public:
             
             for (int i=0; i<nSamples; ++i)
                 buf[i] = Data[i] * ONEOVERSHORTMAX;
+            return true;
         }
         else
         {
-            cout << "Couldn't find the file: " << file_name << endl;
-            std::exit(1);
+            return false;
         }
     }
     
     float next_sample(void)
     {
-        if (reader_enable && !mute)
+        if (reader_enabled && !mute)
         {
             return buf[bufReader++];
         }
@@ -92,9 +92,10 @@ public:
         return TimeStruct(bufReader, SampleRate, NumChannels);
     }
     
-    bool reader_enable = true;
+    bool reader_enabled = false;
     bool mute = false;
-    
+    std::atomic<unsigned long> bufReader = {0};
+
 private:
     std::string file_name;
     float *buf;
@@ -104,7 +105,6 @@ private:
     char ChunkID[4], Format[4], Subchunk1ID[4],Subchunk2ID[4];
     int ChunkSize, Subchunk1Size, SampleRate, ByteRate, Subchunk2Size;
     short AudioFormat, NumChannels, BlockAlign, BitsPerSample;
-    std::atomic<unsigned long> bufReader = {0};
     
     unsigned long nSamples;
 };

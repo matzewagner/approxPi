@@ -9,22 +9,26 @@
 #ifndef WavPlayer_h
 #define WavPlayer_h
 
-#include "WavReader.hpp"
+#include "WavReader.h"
 
 class WavPlayer
 {
 public:
-    WavPlayer(string fileName)
+    WavReader audiofile;
+
+    bool open_file(string fileName)
     {
         audiofile.open_file(fileName);
-        duration(audiofile.getTotalDur());
     }
-    
-    WavReader audioFile;
     
     bool isPlaying(void)
     {
-        return playing;
+        return audiofile.reader_enabled;
+    }
+    
+    bool isMuted(void)
+    {
+        return audiofile.mute;
     }
     
     void play(void)
@@ -32,7 +36,6 @@ public:
         if(!isPlaying())
         {
             audiofile.reader_enabled = true;
-            playing = true;
         }
     }
     
@@ -40,9 +43,14 @@ public:
     {
         if(isPlaying())
         {
-            playing = false;
             audiofile.reader_enabled = false;
         }
+    }
+    
+    void stop(void)
+    {
+        pause();
+        audiofile.bufReader = 0;
     }
     
     bool togglePlay(void)
@@ -55,28 +63,21 @@ public:
         return isPlaying();
     }
     
-    bool mute(void)
+    bool toggleMute(void)
     {
-        mute = true;
-        audiofile.mute();
+        audiofile.mute = !audiofile.mute;
+        return audiofile.mute;
     }
     
-    void stop(void)
+    TimeStruct getTotalDuration(void)
     {
-        playing = false;
-        audiofile.readBuf = 0;
+        return audiofile.getTotalDur();
     }
     
-    void mute(void)
+    TimeStruct getCurrentTime(void)
     {
-        audiofile.mute = true;
-        mute = true;
+        return audiofile.getCurrentTime();
     }
-
-private:
-    bool playing = false;
-    bool mute = false;
-    TimeStruct duration;
 };
 
 
