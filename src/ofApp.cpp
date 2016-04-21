@@ -21,14 +21,39 @@ void ofApp::setup(){
 }
 
 //--------------------------------------------------------------
+void ofApp::setup_w2(){
+    ofBackground(bgColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::setup_w3(){
+    ofBackground(bgColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::setup_w4(){
+    ofBackground(bgColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::setup_w5(){
+    ofBackground(bgColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::setup_w6(){
+    ofBackground(bgColor);
+}
+
+//--------------------------------------------------------------
 void ofApp::update(){
     
     for (int i=0; i<NCHANNELS; ++i)
     {
         // Get latest approximation:
-        double latest_approximation = approximator[0].currentApprox;
+        double latest_approximation = approximator[i].currentApprox;
 
-        ofSetBackgroundColor(BGColor+7, BGColor, BGColor);
+        ofSetBackgroundColor(bgColor);
 
         // write to frame buffer object
         fbo[i].begin();
@@ -69,10 +94,37 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
 //--------------------------------------------------------------
 void ofApp::draw(){
     fbo[0].draw(0,0);
-
-    // TODO: Draw it on multiple screens.
 }
 
+//--------------------------------------------------------------
+void ofApp::draw_w2(ofEventArgs & args){
+    ofBackground(bgColor);
+    fbo[1].draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::draw_w3(ofEventArgs & args){
+    ofBackground(bgColor);
+    fbo[2].draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::draw_w4(ofEventArgs & args){
+    ofBackground(bgColor);
+    fbo[3].draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::draw_w5(ofEventArgs & args){
+    ofBackground(bgColor);
+    fbo[4].draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::draw_w6(ofEventArgs & args){
+    ofBackground(bgColor);
+    fbo[5].draw(0,0);
+}
 //--------------------------------------------------------------
 void ofApp::drawDigits(double number){
 

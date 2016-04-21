@@ -1,7 +1,7 @@
 #pragma once
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 1024
+#define WINDOW_WIDTH 400
+#define WINDOW_HEIGHT 400
 
 #include "ofMain.h"
 #include "ApproximatePi.h"
@@ -19,8 +19,20 @@ using namespace std;
 class ofApp : public ofBaseApp{
 	public:
 		void setup();
-		void update();
+        void setup_w2();
+        void setup_w3();
+        void setup_w4();
+        void setup_w5();
+        void setup_w6();
+	
+        void update();
+    
 		void draw();
+        void draw_w2(ofEventArgs & args);
+        void draw_w3(ofEventArgs & args);
+        void draw_w4(ofEventArgs & args);
+        void draw_w5(ofEventArgs & args);
+        void draw_w6(ofEventArgs & args);
 		
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -51,6 +63,8 @@ class ofApp : public ofBaseApp{
 
         // For Drawing Digits
 	    ofFbo fbo[NCHANNELS];
+        ofFbo fbo2;
+        ofColor bgColor = ofColor(37, 30, 30);
 		int BGColor = 30;
         ofTrueTypeFont myNumberFont, myPiFont;
         
