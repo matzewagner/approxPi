@@ -13,6 +13,7 @@ void ofApp::setup(){
     fontSize = WINDOW_HEIGHT*0.25;
     myNumberFont.load("Futura-Medium.ttf", fontSize);
     myPiFont.load("Symbol.ttf", fontSize);
+    myStatusFont.load("Futura-Medium.ttf", fontSize*0.25);
     piSymbol.load("pi.png");
     for (int i=0; i<NCHANNELS; ++i)
         fbo[i].allocate(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -67,6 +68,7 @@ void ofApp::update(){
         ofPushMatrix();
         ofTranslate(100, 0);
         drawDigits(latest_approximation);
+        drawStatus(i+1);
         ofPopMatrix();
         fbo[i].end();
     }
@@ -125,6 +127,7 @@ void ofApp::draw_w6(ofEventArgs & args){
     ofBackground(bgColor);
     fbo[5].draw(0,0);
 }
+
 //--------------------------------------------------------------
 void ofApp::drawDigits(double number){
 
@@ -156,6 +159,41 @@ void ofApp::drawDigits(double number){
             place = 1;
         }
     }
+}
+
+//--------------------------------------------------------------
+void ofApp::drawStatus(int wNum){
+    int lineSpacing = 50;
+    int xMargin = 0;
+    
+    // draw window number
+    ofSetColor(255, 180, 100);
+    string wN = "Window: " + to_string(wNum);
+    myStatusFont.drawString(wN, xMargin, lineSpacing*1);
+    
+    // draw time elapsed status
+    int mins = 5, secs = 40;
+    string t_elapsed = "Time elapsed: " + to_string(mins) + ":" + to_string(secs);
+    myStatusFont.drawString(t_elapsed, xMargin, lineSpacing*2);
+    
+    // draw play/pause status
+    bool pause = false;
+    if (pause) {
+        ofSetColor(255, 0, 0);
+        myStatusFont.drawString("Pause", xMargin, lineSpacing*3);
+    } else {
+        ofSetColor(0, 255, 0);
+        myStatusFont.drawString("Play", xMargin, lineSpacing*3);
+    }
+    
+    // draw mute status
+    bool mute = true;
+    if (mute) {
+        ofSetColor(255, 0, 0);
+        myStatusFont.drawString("Mute", xMargin, lineSpacing*4);
+    }
+    
+    
 }
 
 //--------------------------------------------------------------

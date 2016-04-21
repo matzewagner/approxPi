@@ -48,6 +48,7 @@ class ofApp : public ofBaseApp{
 		void exit();
 		void audioOut( float * output, int bufferSize, int nChannels );
 		void drawDigits(double number);
+        void drawStatus(int wNum);
 
 
 	private:
@@ -66,7 +67,7 @@ class ofApp : public ofBaseApp{
         ofFbo fbo2;
         ofColor bgColor = ofColor(37, 30, 30);
 		int BGColor = 30;
-        ofTrueTypeFont myNumberFont, myPiFont;
+        ofTrueTypeFont myNumberFont, myPiFont, myStatusFont;
         
         int fontSize;
         float lineSpacing[3] = {0.3, 0.625, 0.95};
