@@ -73,5 +73,6 @@ class ofApp : public ofBaseApp{
         float lineSpacing[3] = {0.3, 0.625, 0.95};
     
         ofImage piSymbol;
+        bool status = true;
 
 };

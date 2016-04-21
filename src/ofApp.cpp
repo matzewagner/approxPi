@@ -59,16 +59,13 @@ void ofApp::update(){
         // write to frame buffer object
         fbo[i].begin();
         ofClear(0, 0, 0, 0);
-        piSymbol.draw(100, 20);
-        ofSetColor(255, 180, 100);
-        ofPushMatrix();
-        ofScale(0.7, 1.0);
-        myNumberFont.drawString("=", 520, ofGetHeight()*lineSpacing[0]-0);
-        ofPopMatrix();
         ofPushMatrix();
         ofTranslate(100, 0);
-        drawDigits(latest_approximation);
-        drawStatus(i+1);
+        if (!status) {
+            drawDigits(latest_approximation);
+        } else if (status) {
+            drawStatus(i+1);
+        }
         ofPopMatrix();
         fbo[i].end();
     }
@@ -131,6 +128,13 @@ void ofApp::draw_w6(ofEventArgs & args){
 //--------------------------------------------------------------
 void ofApp::drawDigits(double number){
 
+    piSymbol.draw(100, 20);
+    ofSetColor(255, 180, 100);
+    ofPushMatrix();
+    ofScale(0.7, 1.0);
+    myNumberFont.drawString("=", 520, ofGetHeight()*lineSpacing[0]-0);
+    ofPopMatrix();
+    
     int digits[APPROXIMATOR_PRECISION];
     getDigits(number, digits);    // Get the digits
 
@@ -207,6 +211,8 @@ void ofApp::keyPressed(int key){
         PiPlayer.togglePlay();
     if(key == 'm')
         PiPlayer.toggleMute();
+    if(key == 's')
+        status = !status;
 }
 
 //--------------------------------------------------------------
