@@ -9,7 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "WavReader.hpp"
+#include "WavPlayer.h"
 
 using namespace std;
 
@@ -56,7 +56,7 @@ class ofApp : public ofBaseApp{
 		ApproximatePi approximator[6];
 
         string fName = "data/ApproxPi_8ChannelNew.wav";
-        WavReader audiofile;
+        WavPlayer PiPlayer;
     
         int counter = 0;
         float *buf;
