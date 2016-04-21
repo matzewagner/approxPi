@@ -23,7 +23,7 @@ void ofApp::setup(){
 void ofApp::update(){
     // Get latest approximation:
     double latest_approximation = approximator[0].currentApprox;
-
+    
     ofSetBackgroundColor(BGColor+7, BGColor, BGColor);
 
     // write to frame buffer object
@@ -58,7 +58,6 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
             audiofile.next_sample();
         }
     }
-
 }
 
 //--------------------------------------------------------------
@@ -108,7 +107,13 @@ void ofApp::exit(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    if(key == ' ')
+        audiofile.reader_enable = !audiofile.reader_enable;
+    
+    if(key == 'm')
+    {
+        audiofile.mute = !audiofile.mute;        
+    }
 }
 
 //--------------------------------------------------------------
