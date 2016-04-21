@@ -45,6 +45,11 @@ public:
 	/*! Makes an apprximation at appropriate times based on the transposition factor given. 
 	*/
 	void tick();
+    
+
+    //! \brief Resets the approximator to it's initial state.
+    void Reset(void);
+
 
 	//! Performs one step in the approximation. Do not use unless you want to time the approximations yourself. 
 	void approximate();

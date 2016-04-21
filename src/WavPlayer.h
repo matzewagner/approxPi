@@ -78,6 +78,13 @@ public:
     {
         return audiofile.getCurrentTime();
     }
+    
+    void setEndTime(TimeStruct endTime)
+    {
+        unsigned long seconds = endTime.minutes * 60 + endTime.seconds;
+        
+        audiofile.set_end_samples( seconds * audiofile.sampleRate() * audiofile.nChannels() );
+    }
 };
 
 

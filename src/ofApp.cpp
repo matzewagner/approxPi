@@ -5,6 +5,9 @@ string myPi;
 void ofApp::setup(){
 
     PiPlayer.open_file(fName);
+    
+    TimeStruct endTime(6, 30);
+    PiPlayer.setEndTime(endTime);
 
     // Setting respective transposition factors
     for(int i=0; i<NCHANNELS; i++)
@@ -83,7 +86,7 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
         
         // This ensures that you can read the 8-channel file correctly.
         // Increments file pointer so that it reaches the end of the frame.
-        for (int chan=0; chan<(PiPlayer.audiofile.getNumChannels()-nChannels); chan++)
+        for (int chan=0; chan<(PiPlayer.audiofile.nChannels()-nChannels); chan++)
         {
             PiPlayer.audiofile.next_sample();
         }
@@ -211,6 +214,12 @@ void ofApp::keyPressed(int key){
         PiPlayer.toggleMute();
     if(key == 's')
         status = !status;
+    if(key == '0')
+    {
+        PiPlayer.stop();
+        for(int i=0; i<NCHANNELS; i++)
+            approximator[i].Reset();
+    }
 }
 
 //--------------------------------------------------------------

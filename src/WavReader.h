@@ -51,6 +51,9 @@ public:
             
             for (int i=0; i<nSamples; ++i)
                 buf[i] = Data[i] * ONEOVERSHORTMAX;
+            
+            end_samples = nSamples;
+            
             return true;
         }
         else
@@ -63,7 +66,13 @@ public:
     {
         if (reader_enabled && !mute)
         {
-            return buf[bufReader++];
+            if(bufReader < end_samples)
+                return buf[bufReader++];
+            else
+            {
+                reader_enabled = false;
+                return 0;
+            }
         }
         else if (mute)
         {
@@ -76,9 +85,14 @@ public:
         }
     }
     
-    int getNumChannels(void)
+    int nChannels(void)
     {
         return NumChannels;
+    }
+    
+    int sampleRate(void)
+    {
+        return SampleRate;
     }
     
     TimeStruct getTotalDur(void)
@@ -90,6 +104,12 @@ public:
     {
         unsigned long current_len = bufReader;
         return TimeStruct(bufReader, SampleRate, NumChannels);
+    }
+    
+    void set_end_samples(unsigned long samples)
+    {
+        if (samples <= nSamples)
+            end_samples = samples;
     }
     
     bool reader_enabled = false;
@@ -107,6 +127,7 @@ private:
     short AudioFormat, NumChannels, BlockAlign, BitsPerSample;
     
     unsigned long nSamples;
+    unsigned long end_samples;
 };
 
 
