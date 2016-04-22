@@ -4,7 +4,13 @@ string myPi;
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    PiPlayer.open_file(fName);
+    if( !PiPlayer.open_file(fName) )
+    {
+        cout << "Error opening file" << endl;
+        exit();
+    }
+    
+
     
     TimeStruct endTime(6, 30);
     PiPlayer.setEndTime(endTime);

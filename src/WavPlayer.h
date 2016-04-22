@@ -18,7 +18,7 @@ public:
 
     bool open_file(string fileName)
     {
-        audiofile.open_file(fileName);
+        return audiofile.open_file(fileName);
     }
     
     bool isPlaying(void)
