@@ -10,7 +10,6 @@ void ofApp::setup(){
         exit();
     }
     
-
     
     TimeStruct endTime(6, 30);
     PiPlayer.setEndTime(endTime);
@@ -31,29 +30,29 @@ void ofApp::setup(){
 }
 
 //--------------------------------------------------------------
-void ofApp::setup_w2(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w3(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w4(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w5(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w6(){
-    ofBackground(bgColor);
-}
+//void ofApp::setup_w2(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w3(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w4(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w5(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w6(){
+//    ofBackground(bgColor);
+//}
 
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -69,7 +68,6 @@ void ofApp::update(){
         fbo[i].begin();
         ofClear(0, 0, 0, 0);
         ofPushMatrix();
-        ofTranslate(100, 0);
         if (!status) {
             drawDigits(latest_approximation);
         } else if (status) {
@@ -105,67 +103,83 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void ofApp::draw_w2(ofEventArgs & args){
-    ofBackground(bgColor);
-    fbo[1].draw(0,0);
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w3(ofEventArgs & args){
-    ofBackground(bgColor);
-    fbo[2].draw(0,0);
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w4(ofEventArgs & args){
-    ofBackground(bgColor);
-    fbo[3].draw(0,0);
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w5(ofEventArgs & args){
-    ofBackground(bgColor);
-    fbo[4].draw(0,0);
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w6(ofEventArgs & args){
-    ofBackground(bgColor);
-    fbo[5].draw(0,0);
-}
+//void ofApp::draw_w2(ofEventArgs & args){
+//    ofBackground(bgColor);
+//    fbo[1].draw(0,0);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::draw_w3(ofEventArgs & args){
+//    ofBackground(bgColor);
+//    fbo[2].draw(0,0);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::draw_w4(ofEventArgs & args){
+//    ofBackground(bgColor);
+//    fbo[3].draw(0,0);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::draw_w5(ofEventArgs & args){
+//    ofBackground(bgColor);
+//    fbo[4].draw(0,0);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::draw_w6(ofEventArgs & args){
+//    ofBackground(bgColor);
+//    fbo[5].draw(0,0);
+//}
 
 //--------------------------------------------------------------
 void ofApp::drawDigits(double number){
 
-    piSymbol.draw(100, 20);
-    ofSetColor(255, 180, 100);
-    ofPushMatrix();
-    ofScale(0.7, 1.0);
-    myNumberFont.drawString("=", 520, ofGetHeight()*lineSpacing[0]-0);
-    ofPopMatrix();
+    int lineIndex = 0;
+    int place = 1;
+    float letterWidthScaler = 0.8;
+    
+    piSymbol.draw(0, 20);
     
     int digits[APPROXIMATOR_PRECISION];
     getDigits(number, digits);    // Get the digits
-
-    int lineIndex = 0;
-    int place = 2;
     
+    // draw the equal sign
+    ofPushMatrix();
+    ofSetColor(255, 180, 100);
+    ofTranslate((place)*fontSize*0.9, 0);
+    ofScale(0.65, 1.0);
+    myNumberFont.drawString("=", 0, ofGetHeight()*lineSpacing[0]);
+    ofPopMatrix();
+    
+    // loop over the digits
+    ofTranslate(fontSize*0.2, 0);
     for (int i=0; i<APPROXIMATOR_PRECISION; i++)
     {
         float colorScaler;
-
+        
+        // offset the letters in the first line by half letter width
+        ofPushMatrix();
+        if (lineIndex == 0)
+            ofTranslate(fontSize*0.4, 0);
+        
         // Also draw the dot here
         if(i==1)
         {
             colorScaler = 1.0;
             ofSetColor(255*colorScaler, 180*colorScaler, 100*colorScaler);
-            myNumberFont.drawString(".", place*fontSize*0.8, ofGetHeight()*lineSpacing[lineIndex]);
+            myNumberFont.drawString(".", (place*fontSize*letterWidthScaler) + (myNumberFont.getLetterSpacing()*fontSize*letterWidthScaler*0.25), ofGetHeight()*lineSpacing[lineIndex]);
+            place++;
         }
-
+        
+        // draw the digits
         colorScaler = digits[i]*0.1;
         ofSetColor(255*colorScaler, 180*colorScaler, 100*colorScaler);
-        myNumberFont.drawString(to_string(digits[i]), place*fontSize*0.8, ofGetHeight()*lineSpacing[lineIndex]);
+        myNumberFont.drawString(to_string(digits[i]), place*fontSize*letterWidthScaler, ofGetHeight()*lineSpacing[lineIndex]);
+        ofPopMatrix();
         ++place;
+        
+        // jump to the beginning of the next line
         if (i == 1 || i == 5)
         {
             ++lineIndex;
@@ -176,8 +190,8 @@ void ofApp::drawDigits(double number){
 
 //--------------------------------------------------------------
 void ofApp::drawStatus(int wNum){
-    int lineSpacing = 50;
-    int xMargin = 0;
+    int lineSpacing = ofGetHeight()*0.2;
+    int xMargin = 100;
     
     // draw window number
     ofSetColor(255, 180, 100);
