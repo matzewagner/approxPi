@@ -31,30 +31,30 @@ void ofApp::setup(){
 }
 
 //--------------------------------------------------------------
-//void ofApp::setup_w2(){
-//    ofBackground(bgColor);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::setup_w3(){
-//    ofBackground(bgColor);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::setup_w4(){
-//    ofBackground(bgColor);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::setup_w5(){
-//    ofBackground(bgColor);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::setup_w6(){
-//    ofBackground(bgColor);
-//}
-//
+void ofApp::setup_w2(){
+    ofBackground(bgColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::setup_w3(){
+    ofBackground(bgColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::setup_w4(){
+    ofBackground(bgColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::setup_w5(){
+    ofBackground(bgColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::setup_w6(){
+    ofBackground(bgColor);
+}
+
 //--------------------------------------------------------------
 void ofApp::update(){
     
@@ -104,34 +104,34 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-//void ofApp::draw_w2(ofEventArgs & args){
-//    ofBackground(bgColor);
-//    fbo[1].draw(0,0);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::draw_w3(ofEventArgs & args){
-//    ofBackground(bgColor);
-//    fbo[2].draw(0,0);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::draw_w4(ofEventArgs & args){
-//    ofBackground(bgColor);
-//    fbo[3].draw(0,0);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::draw_w5(ofEventArgs & args){
-//    ofBackground(bgColor);
-//    fbo[4].draw(0,0);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::draw_w6(ofEventArgs & args){
-//    ofBackground(bgColor);
-//    fbo[5].draw(0,0);
-//}
+void ofApp::draw_w2(ofEventArgs & args){
+    ofBackground(bgColor);
+    fbo[1].draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::draw_w3(ofEventArgs & args){
+    ofBackground(bgColor);
+    fbo[2].draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::draw_w4(ofEventArgs & args){
+    ofBackground(bgColor);
+    fbo[3].draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::draw_w5(ofEventArgs & args){
+    ofBackground(bgColor);
+    fbo[4].draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::draw_w6(ofEventArgs & args){
+    ofBackground(bgColor);
+    fbo[5].draw(0,0);
+}
 
 //--------------------------------------------------------------
 void ofApp::drawDigits(double number){
@@ -140,7 +140,7 @@ void ofApp::drawDigits(double number){
     int place = 1;
     float letterWidthScaler = 0.8;
     
-    piSymbol.draw(0, 20);
+    piSymbol.draw(0, ofGetHeight()*lineSpacing[0] - piSymbol.getHeight()*1.1);
     
     int digits[APPROXIMATOR_PRECISION];
     getDigits(number, digits);    // Get the digits
@@ -150,7 +150,7 @@ void ofApp::drawDigits(double number){
     fontColor.setHsb(myHue, 255, 255);
     ofSetColor(fontColor);
     ofTranslate((place)*fontSize*0.9, 0);
-    ofScale(0.65, 1.0);
+    ofScale(0.55, 1.0);
     myNumberFont.drawString("=", 0, ofGetHeight()*lineSpacing[0]);
     ofPopMatrix();
     
