@@ -178,7 +178,7 @@ void ofApp::drawDigits(double number){
         }
         
         // draw the digits
-        brightnessScaler = (0.25 + digits[i]*0.1)*255;
+        brightnessScaler = (0.3 + digits[i]*0.1)*255;
         saturationScaler = (pow(digits[i]*0.1,2))*255;
         fontColor.setHsb(myHue, 255-saturationScaler, brightnessScaler);
         ofSetColor(fontColor);

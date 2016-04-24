@@ -1,9 +1,9 @@
 #pragma once
 
-//#define WINDOW_WIDTH 1280
-//#define WINDOW_HEIGHT 1024
-#define WINDOW_WIDTH 300
-#define WINDOW_HEIGHT 300
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 1024
+//#define WINDOW_WIDTH 400
+//#define WINDOW_HEIGHT 400
 
 #include "ofMain.h"
 #include "ApproximatePi.h"
