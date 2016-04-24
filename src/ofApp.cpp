@@ -71,10 +71,12 @@ void ofApp::update(){
         fbo[i].begin();
         ofClear(0, 0, 0, 0);
         ofPushMatrix();
-        if (!status) {
+        if (status == 2) {
             drawDigits(latest_approximation);
-        } else if (status) {
+        } else if (status == 1) {
             drawStatus(i+1);
+        } else if (status == 0) {
+            drawBlack();
         }
         ofPopMatrix();
         fbo[i].end();
@@ -135,6 +137,10 @@ void ofApp::draw_w6(ofEventArgs & args){
     fbo[5].draw(0,0);
 }
 
+//--------------------------------------------------------------
+void ofApp::drawBlack(){
+
+}
 //--------------------------------------------------------------
 void ofApp::drawDigits(double number){
 
@@ -241,8 +247,12 @@ void ofApp::keyPressed(int key){
         PiPlayer.togglePlay();
     if(key == 'm')
         PiPlayer.toggleMute();
-    if(key == 's')
-        status = !status;
+    if(key == '1')
+        status = 0;
+    if(key == '2')
+        status = 1;
+    if(key == '3')
+        status = 2;
     if(key == '0')
     {
         PiPlayer.stop();

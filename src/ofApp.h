@@ -50,6 +50,7 @@ class ofApp : public ofBaseApp{
 		void audioOut( float * output, int bufferSize, int nChannels );
 		void drawDigits(double number);
         void drawStatus(int wNum);
+        void drawBlack();
 
 
 	private:
@@ -74,6 +75,8 @@ class ofApp : public ofBaseApp{
         float lineSpacing[3] = {0.3, 0.625, 0.95};
     
         ofImage piSymbol;
-        bool status = false;
+
+        int status = 0; // 0 = black, 1 = status, 2 = pi
+    
 
 };
