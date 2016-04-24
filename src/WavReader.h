@@ -76,7 +76,7 @@ public:
         }
         else if (mute)
         {
-            bufReader ++;
+            bufReader++;
             return 0;
         }
         else
