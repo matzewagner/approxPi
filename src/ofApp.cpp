@@ -3,7 +3,9 @@ string myPi;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+    
+    ofSetDataPathRoot("../Resources/data/");
+    
     if( !PiPlayer.open_file(fName) )
     {
         cout << "Error opening file" << endl;

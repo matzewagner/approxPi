@@ -17,7 +17,6 @@ using namespace std;
 
 #define NCHANNELS 6
 
-
 class ofApp : public ofBaseApp{
 	public:
 		void setup();
