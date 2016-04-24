@@ -228,7 +228,6 @@ void ofApp::drawStatus(int wNum){
         ofSetColor(255, 0, 0);
         myStatusFont.drawString("Mute", xMargin, lineSpacing*4);
     }
-    
 }
 
 //--------------------------------------------------------------

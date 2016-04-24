@@ -110,6 +110,22 @@ public:
     {
         if (samples <= nSamples)
             end_samples = samples;
+        
+        //TODO: BUG - Ends "slightly" earlier than it should, but ends correctly.
+        
+        float delay = 0.1; //(in seconds). Between each channel stopping
+        
+        for(int chan = 0; chan<NumChannels; chan++)
+        {
+            int n = (end_samples/NumChannels) - (delay*SampleRate*(NumChannels-chan));
+            int m = end_samples;
+            m = m*1.0/NumChannels;
+            
+            for(int i= n*NumChannels; i<m*NumChannels; i+=NumChannels)
+            {
+                buf[i + chan] = 0;
+            }
+        }
     }
     
     bool reader_enabled = false;
