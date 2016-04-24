@@ -19,6 +19,7 @@ void ofApp::setup(){
         approximator[i].setTransposeFactor(TRANSPOSITION_FACTOR[i]);
     
     fontSize = WINDOW_HEIGHT*0.25;
+    fontColor = ofColor::fromHsb(50*(255/360), 96, 99);
     myNumberFont.load("Futura-Medium.ttf", fontSize);
     myPiFont.load("Symbol.ttf", fontSize);
     myStatusFont.load("Futura-Medium.ttf", fontSize*0.25);
@@ -30,30 +31,30 @@ void ofApp::setup(){
 }
 
 //--------------------------------------------------------------
-void ofApp::setup_w2(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w3(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w4(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w5(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w6(){
-    ofBackground(bgColor);
-}
-
+//void ofApp::setup_w2(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w3(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w4(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w5(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w6(){
+//    ofBackground(bgColor);
+//}
+//
 //--------------------------------------------------------------
 void ofApp::update(){
     
@@ -103,34 +104,34 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void ofApp::draw_w2(ofEventArgs & args){
-    ofBackground(bgColor);
-    fbo[1].draw(0,0);
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w3(ofEventArgs & args){
-    ofBackground(bgColor);
-    fbo[2].draw(0,0);
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w4(ofEventArgs & args){
-    ofBackground(bgColor);
-    fbo[3].draw(0,0);
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w5(ofEventArgs & args){
-    ofBackground(bgColor);
-    fbo[4].draw(0,0);
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w6(ofEventArgs & args){
-    ofBackground(bgColor);
-    fbo[5].draw(0,0);
-}
+//void ofApp::draw_w2(ofEventArgs & args){
+//    ofBackground(bgColor);
+//    fbo[1].draw(0,0);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::draw_w3(ofEventArgs & args){
+//    ofBackground(bgColor);
+//    fbo[2].draw(0,0);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::draw_w4(ofEventArgs & args){
+//    ofBackground(bgColor);
+//    fbo[3].draw(0,0);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::draw_w5(ofEventArgs & args){
+//    ofBackground(bgColor);
+//    fbo[4].draw(0,0);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::draw_w6(ofEventArgs & args){
+//    ofBackground(bgColor);
+//    fbo[5].draw(0,0);
+//}
 
 //--------------------------------------------------------------
 void ofApp::drawDigits(double number){
@@ -146,7 +147,8 @@ void ofApp::drawDigits(double number){
     
     // draw the equal sign
     ofPushMatrix();
-    ofSetColor(255, 180, 100);
+    fontColor.setHsb(myHue, 255, 255);
+    ofSetColor(fontColor);
     ofTranslate((place)*fontSize*0.9, 0);
     ofScale(0.65, 1.0);
     myNumberFont.drawString("=", 0, ofGetHeight()*lineSpacing[0]);
@@ -156,7 +158,8 @@ void ofApp::drawDigits(double number){
     ofTranslate(fontSize*0.2, 0);
     for (int i=0; i<APPROXIMATOR_PRECISION; i++)
     {
-        float colorScaler;
+        float brightnessScaler;
+        float saturationScaler;
         
         // offset the letters in the first line by half letter width
         ofPushMatrix();
@@ -166,15 +169,19 @@ void ofApp::drawDigits(double number){
         // Also draw the dot here
         if(i==1)
         {
-            colorScaler = 1.0;
-            ofSetColor(255*colorScaler, 180*colorScaler, 100*colorScaler);
+            brightnessScaler = 255;
+            saturationScaler = 255;
+            fontColor.setHsb(myHue, saturationScaler, brightnessScaler);
+            ofSetColor(fontColor);
             myNumberFont.drawString(".", (place*fontSize*letterWidthScaler) + (myNumberFont.getLetterSpacing()*fontSize*letterWidthScaler*0.25), ofGetHeight()*lineSpacing[lineIndex]);
             place++;
         }
         
         // draw the digits
-        colorScaler = digits[i]*0.1;
-        ofSetColor(255*colorScaler, 180*colorScaler, 100*colorScaler);
+        brightnessScaler = (0.25 + digits[i]*0.1)*255;
+        saturationScaler = (pow(digits[i]*0.1,2))*255;
+        fontColor.setHsb(myHue, 255-saturationScaler, brightnessScaler);
+        ofSetColor(fontColor);
         myNumberFont.drawString(to_string(digits[i]), place*fontSize*letterWidthScaler, ofGetHeight()*lineSpacing[lineIndex]);
         ofPopMatrix();
         ++place;
@@ -194,7 +201,8 @@ void ofApp::drawStatus(int wNum){
     int xMargin = 100;
     
     // draw window number
-    ofSetColor(255, 180, 100);
+    fontColor.setHsb(myHue, 255, 255);
+    ofSetColor(fontColor);
     string wN = "Window: " + to_string(wNum);
     myStatusFont.drawString(wN, xMargin, lineSpacing*1);
     
