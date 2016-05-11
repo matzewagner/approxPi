@@ -20,7 +20,6 @@ void ofApp::setup(){
     for(int i=0; i<NCHANNELS; i++)
         approximator[i].setTransposeFactor(TRANSPOSITION_FACTOR[i]);
     
-    fontSize = WINDOW_HEIGHT*0.25;
     fontColor = ofColor::fromHsb(50*(255/360), 96, 99);
     myNumberFont.load("Futura-Medium.ttf", fontSize);
     myPiFont.load("Symbol.ttf", fontSize);
@@ -33,29 +32,29 @@ void ofApp::setup(){
 }
 
 //--------------------------------------------------------------
-//void ofApp::setup_w2(){
-//    ofBackground(bgColor);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::setup_w3(){
-//    ofBackground(bgColor);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::setup_w4(){
-//    ofBackground(bgColor);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::setup_w5(){
-//    ofBackground(bgColor);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::setup_w6(){
-//    ofBackground(bgColor);
-//}
+void ofApp::setup_w2(){
+    ofBackground(bgColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::setup_w3(){
+    ofBackground(bgColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::setup_w4(){
+    ofBackground(bgColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::setup_w5(){
+    ofBackground(bgColor);
+}
+
+//--------------------------------------------------------------
+void ofApp::setup_w6(){
+    ofBackground(bgColor);
+}
 
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -69,7 +68,7 @@ void ofApp::update(){
 
         // write to frame buffer object
         fbo[i].begin();
-        ofTranslate(60, 20);
+        ofTranslate(fontSize*0.6,  verticalFontMargin);
         ofClear(0, 0, 0, 0);
         ofPushMatrix();
         if (status == 2) {
@@ -105,39 +104,45 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::draw() {
+    scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
     fbo[0].draw(0,0);
 }
 
 ////--------------------------------------------------------------
-//void ofApp::draw_w2(ofEventArgs & args){
-//    ofBackground(bgColor);
-//    fbo[1].draw(0,0);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::draw_w3(ofEventArgs & args){
-//    ofBackground(bgColor);
-//    fbo[2].draw(0,0);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::draw_w4(ofEventArgs & args){
-//    ofBackground(bgColor);
-//    fbo[3].draw(0,0);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::draw_w5(ofEventArgs & args){
-//    ofBackground(bgColor);
-//    fbo[4].draw(0,0);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::draw_w6(ofEventArgs & args){
-//    ofBackground(bgColor);
-//    fbo[5].draw(0,0);
-//}
+void ofApp::draw_w2(ofEventArgs & args){
+    scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
+    ofBackground(bgColor);
+    fbo[1].draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::draw_w3(ofEventArgs & args){
+    scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
+    ofBackground(bgColor);
+    fbo[2].draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::draw_w4(ofEventArgs & args){
+    scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
+    ofBackground(bgColor);
+    fbo[3].draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::draw_w5(ofEventArgs & args){
+    scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
+    ofBackground(bgColor);
+    fbo[4].draw(0,0);
+}
+
+//--------------------------------------------------------------
+void ofApp::draw_w6(ofEventArgs & args){
+    scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
+    ofBackground(bgColor);
+    fbo[5].draw(0,0);
+}
 
 //--------------------------------------------------------------
 void ofApp::drawBlack(){
@@ -146,11 +151,13 @@ void ofApp::drawBlack(){
 //--------------------------------------------------------------
 void ofApp::drawDigits(double number){
 
-    int lineIndex = 0;
+    int lineIndex = 1;
     int place = 1;
     float letterWidthScaler = 0.8;
+    verticalFontMargin = fontSize*0.15;
+
     
-    piSymbol.draw(0, ofGetHeight()*lineSpacing[0] - piSymbol.getHeight()*1.1);
+    piSymbol.draw(-fontSize*0.5, verticalFontMargin);
     
     int digits[APPROXIMATOR_PRECISION];
     getDigits(number, digits);    // Get the digits
@@ -159,13 +166,12 @@ void ofApp::drawDigits(double number){
     ofPushMatrix();
     fontColor.setHsb(myHue, 255, 255);
     ofSetColor(fontColor);
-    ofTranslate((place)*fontSize*0.975, 0);
+    ofTranslate(0.75*fontSize, 0);
     ofScale(0.55, 1.0);
-    myNumberFont.drawString("=", 0, ofGetHeight()*lineSpacing[0]);
+    myNumberFont.drawString("=", 0, (fontSize + verticalFontMargin) * lineIndex);
     ofPopMatrix();
     
     // loop over the digits
-    ofTranslate(fontSize*0.2, 0);
     for (int i=0; i<APPROXIMATOR_PRECISION; i++)
     {
         float brightnessScaler;
@@ -173,17 +179,17 @@ void ofApp::drawDigits(double number){
         
         // offset the letters in the first line by half letter width
         ofPushMatrix();
-        if (lineIndex == 0)
+        if (lineIndex == 1)
             ofTranslate(fontSize*0.4, 0);
         
         // Also draw the dot here
-        if(i==1)
+        if (i==1)
         {
             brightnessScaler = 255;
             saturationScaler = 255;
             fontColor.setHsb(myHue, saturationScaler, brightnessScaler);
             ofSetColor(fontColor);
-            myNumberFont.drawString(".", (place*fontSize*letterWidthScaler) + (myNumberFont.getLetterSpacing()*fontSize*letterWidthScaler*0.25), ofGetHeight()*lineSpacing[lineIndex]);
+            myNumberFont.drawString(".", (place*fontSize*letterWidthScaler) + (myNumberFont.getLetterSpacing()*fontSize*letterWidthScaler*0.25), (fontSize + verticalFontMargin) * lineIndex);
             place++;
         }
         
@@ -192,7 +198,7 @@ void ofApp::drawDigits(double number){
         saturationScaler = (pow(digits[i]*0.1,2))*255;
         fontColor.setHsb(myHue, 255-saturationScaler, brightnessScaler);
         ofSetColor(fontColor);
-        myNumberFont.drawString(to_string(digits[i]), place*fontSize*letterWidthScaler, ofGetHeight()*lineSpacing[lineIndex]);
+        myNumberFont.drawString(to_string(digits[i]), place*fontSize*letterWidthScaler, (fontSize + verticalFontMargin) * lineIndex);
         ofPopMatrix();
         ++place;
         
@@ -207,7 +213,7 @@ void ofApp::drawDigits(double number){
 
 //--------------------------------------------------------------
 void ofApp::drawStatus(int wNum){
-    int lineSpacing = ofGetHeight()*0.2;
+    int lineSpacing = (fontSize+verticalFontMargin)*0.75;
     int xMargin = 100;
     
     // draw window number
@@ -238,6 +244,12 @@ void ofApp::drawStatus(int wNum){
     }
 }
 
+//--------------------------------------------------------------
+void ofApp::scaleContent(int w, int h) {
+    float horizontalWindowScaleFactor = w / float(fontSize*6.0);
+    float verticalWindowScaleFactor = h / float(fontSize*3.8);
+    ofScale(horizontalWindowScaleFactor, verticalWindowScaleFactor);
+}
 //--------------------------------------------------------------
 void ofApp::exit(){
     ofSoundStreamClose();

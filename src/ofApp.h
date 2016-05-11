@@ -15,25 +15,25 @@
 
 using namespace std;
 
-#define NCHANNELS 1
+#define NCHANNELS 6
 
 class ofApp : public ofBaseApp{
 	public:
 		void setup();
-//        void setup_w2();
-//        void setup_w3();
-//        void setup_w4();
-//        void setup_w5();
-//        void setup_w6();
+        void setup_w2();
+        void setup_w3();
+        void setup_w4();
+        void setup_w5();
+        void setup_w6();
 	
         void update();
     
 		void draw();
-//        void draw_w2(ofEventArgs & args);
-//        void draw_w3(ofEventArgs & args);
-//        void draw_w4(ofEventArgs & args);
-//        void draw_w5(ofEventArgs & args);
-//        void draw_w6(ofEventArgs & args);
+        void draw_w2(ofEventArgs & args);
+        void draw_w3(ofEventArgs & args);
+        void draw_w4(ofEventArgs & args);
+        void draw_w5(ofEventArgs & args);
+        void draw_w6(ofEventArgs & args);
 		
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -51,6 +51,7 @@ class ofApp : public ofBaseApp{
 		void drawDigits(double number);
         void drawStatus(int wNum);
         void drawBlack();
+        void scaleContent(int w, int h);
 
 
 	private:
@@ -71,7 +72,8 @@ class ofApp : public ofBaseApp{
         float myHue = 25;
         ofTrueTypeFont myNumberFont, myPiFont, myStatusFont;
         
-        int fontSize;
+        int fontSize = 200;
+        float verticalFontMargin;
         float lineSpacing[3] = {0.3, 0.625, 0.95};
     
         ofImage piSymbol;
