@@ -276,6 +276,9 @@ void ofApp::keyPressed(int key){
         for(int i=0; i<NCHANNELS; i++)
             approximator[i].Reset();
     }
+    if (key == 'f')
+        ofToggleFullscreen();
+
 }
 
 //--------------------------------------------------------------

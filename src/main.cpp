@@ -15,6 +15,7 @@ int main( ){
     settings.height = init_windowHeight;
     settings.setPosition(ofVec2f(wX*0,wY*0));
     settings.resizable = true;
+    settings.multiMonitorFullScreen = true;
     shared_ptr<ofAppBaseWindow> w1 = ofCreateWindow(settings);
     w1->setWindowTitle("1");
     
