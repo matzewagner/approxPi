@@ -69,6 +69,7 @@ void ofApp::update(){
 
         // write to frame buffer object
         fbo[i].begin();
+        ofTranslate(60, 20);
         ofClear(0, 0, 0, 0);
         ofPushMatrix();
         if (status == 2) {
@@ -90,6 +91,7 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
         {
             if(PiPlayer.isPlaying())
                 approximator[chan].tick();
+            
             output[i+chan] = PiPlayer.audiofile.next_sample();
         }
         
@@ -157,7 +159,7 @@ void ofApp::drawDigits(double number){
     ofPushMatrix();
     fontColor.setHsb(myHue, 255, 255);
     ofSetColor(fontColor);
-    ofTranslate((place)*fontSize*0.9, 0);
+    ofTranslate((place)*fontSize*0.975, 0);
     ofScale(0.55, 1.0);
     myNumberFont.drawString("=", 0, ofGetHeight()*lineSpacing[0]);
     ofPopMatrix();

@@ -1,5 +1,5 @@
 //
-//  WAVRead.h
+//  WAVReader.h
 //  approxPi
 //
 //  Created by matze on 4/18/16.
@@ -128,7 +128,7 @@ public:
         }
     }
     
-    bool reader_enabled = false;
+    bool reader_enabled = true;
     bool mute = false;
     std::atomic<unsigned long> bufReader = {0};
 

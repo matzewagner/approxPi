@@ -76,7 +76,7 @@ class ofApp : public ofBaseApp{
     
         ofImage piSymbol;
 
-        int status = 0; // 0 = black, 1 = status, 2 = pi
+        int status = 2; // 0 = black, 1 = status, 2 = pi
     
 
 };
