@@ -20,15 +20,18 @@ void ofApp::setup(){
     for(int i=0; i<NCHANNELS; i++)
         approximator[i].setTransposeFactor(TRANSPOSITION_FACTOR[i]);
     
+    fontSize = min(WINDOW_WIDTH, WINDOW_HEIGHT)*0.25;
     fontColor = ofColor::fromHsb(50*(255/360), 96, 99);
     myNumberFont.load("Futura-Medium.ttf", fontSize);
     myPiFont.load("Symbol.ttf", fontSize);
     myStatusFont.load("Futura-Medium.ttf", fontSize*0.25);
     piSymbol.load("pi.png");
+    
     for (int i=0; i<NCHANNELS; ++i)
         fbo[i].allocate(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     ofSoundStreamSetup(NCHANNELS, 0);
+    
 }
 
 //--------------------------------------------------------------

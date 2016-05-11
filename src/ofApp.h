@@ -2,8 +2,6 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 1024
-//#define WINDOW_WIDTH 400
-//#define WINDOW_HEIGHT 400
 
 #include "ofMain.h"
 #include "ApproximatePi.h"
@@ -72,7 +70,7 @@ class ofApp : public ofBaseApp{
         float myHue = 25;
         ofTrueTypeFont myNumberFont, myPiFont, myStatusFont;
         
-        int fontSize = 200;
+        int fontSize;
         float verticalFontMargin;
         float lineSpacing[3] = {0.3, 0.625, 0.95};
     
