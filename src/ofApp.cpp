@@ -33,29 +33,29 @@ void ofApp::setup(){
 }
 
 //--------------------------------------------------------------
-void ofApp::setup_w2(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w3(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w4(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w5(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w6(){
-    ofBackground(bgColor);
-}
+//void ofApp::setup_w2(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w3(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w4(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w5(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w6(){
+//    ofBackground(bgColor);
+//}
 
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -109,35 +109,35 @@ void ofApp::draw(){
     fbo[0].draw(0,0);
 }
 
-//--------------------------------------------------------------
-void ofApp::draw_w2(ofEventArgs & args){
-    ofBackground(bgColor);
-    fbo[1].draw(0,0);
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w3(ofEventArgs & args){
-    ofBackground(bgColor);
-    fbo[2].draw(0,0);
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w4(ofEventArgs & args){
-    ofBackground(bgColor);
-    fbo[3].draw(0,0);
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w5(ofEventArgs & args){
-    ofBackground(bgColor);
-    fbo[4].draw(0,0);
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w6(ofEventArgs & args){
-    ofBackground(bgColor);
-    fbo[5].draw(0,0);
-}
+////--------------------------------------------------------------
+//void ofApp::draw_w2(ofEventArgs & args){
+//    ofBackground(bgColor);
+//    fbo[1].draw(0,0);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::draw_w3(ofEventArgs & args){
+//    ofBackground(bgColor);
+//    fbo[2].draw(0,0);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::draw_w4(ofEventArgs & args){
+//    ofBackground(bgColor);
+//    fbo[3].draw(0,0);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::draw_w5(ofEventArgs & args){
+//    ofBackground(bgColor);
+//    fbo[4].draw(0,0);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::draw_w6(ofEventArgs & args){
+//    ofBackground(bgColor);
+//    fbo[5].draw(0,0);
+//}
 
 //--------------------------------------------------------------
 void ofApp::drawBlack(){

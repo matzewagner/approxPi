@@ -128,7 +128,7 @@ public:
         }
     }
     
-    bool reader_enabled = true;
+    bool reader_enabled = false;
     bool mute = false;
     std::atomic<unsigned long> bufReader = {0};
 
