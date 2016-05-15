@@ -94,6 +94,7 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
                 approximator[chan].tick();
             
             output[i+chan] = PiPlayer.audiofile.next_sample();
+            
         }
     
         

@@ -2,9 +2,6 @@
 
 #define N_SAMPS 5040
 
-////////REMOVE THIS
-#include <iostream>
-
 ApproximatePi::ApproximatePi(int transpose_factor)
 {
 	currentApprox = 4;
@@ -12,6 +9,12 @@ ApproximatePi::ApproximatePi(int transpose_factor)
 	currentSign = 1;
 
 	sample_drop = 5040/transpose_factor;
+    
+    for (int i=0; i<APPROXIMATOR_PRECISION; i++)
+    {
+        float frequency = (8.75 * i+1) * transpose_factor;
+        partials[i].set_freq(frequency);
+    }
 }
 
 void ApproximatePi::Reset(void)
@@ -34,7 +37,7 @@ void ApproximatePi::approximate(void)
 	currentApprox = previousApprox + currentSign* 4.0/(2.0*(currentApproxIndex+1) - 1);
 }
 
-void ApproximatePi::tick()
+float ApproximatePi::tick()
 {
 	if(ticker < sample_drop)
 	{
@@ -45,10 +48,15 @@ void ApproximatePi::tick()
 		ticker = 0;
 		approximate();
 	}
+    
+    if (!audioDisabled)
+    {
+        return getAudioSample();
+    }
 
 }
 
-void ApproximatePi::computePartialAmps(double number, float output_array[APPROXIMATOR_PRECISION])
+void ApproximatePi::computePartialAmps(double number, float output_array[])
 {
 	int digits[APPROXIMATOR_PRECISION];
 
@@ -59,6 +67,25 @@ void ApproximatePi::computePartialAmps(double number, float output_array[APPROXI
 		output_array[i] = pow(2, digits[i]);
 		output_array[i] *= 2 * M_PI/(i+1);		//Sawtooth-spectral factor
 	}
+}
+
+void ApproximatePi::disableAudio(void)
+{
+    audioDisabled = true;    
+}
+
+
+float ApproximatePi::getAudioSample(void)
+{
+    float out=0;
+    float amplitudes[APPROXIMATOR_PRECISION];
+    computePartialAmps(currentApprox, amplitudes);
+    
+    for (int i=0; i<APPROXIMATOR_PRECISION; i++)
+    {
+        out += amplitudes[i] * SquareOsc(partials[i]);
+    }
+    return out;
 }
 
 void getDigits(double number, int digits[APPROXIMATOR_PRECISION])
@@ -74,6 +101,6 @@ void getDigits(double number, int digits[APPROXIMATOR_PRECISION])
 std::string numberToString(double number)
 {
 	std::stringstream s;
-	s << std::fixed << std::setprecision(10) << number;
+	s << std::fixed << std::setprecision(APPROXIMATOR_PRECISION) << number;
 	return s.str();
 }

@@ -78,5 +78,6 @@ class ofApp : public ofBaseApp{
 
         int status = 2; // 0 = black, 1 = status, 2 = pi
     
+    
 
 };

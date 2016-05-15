@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0970F7181CE8FEB80022E5C3 /* ApproximatePi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0970F7131CE8FEB80022E5C3 /* ApproximatePi.cpp */; };
+		097B3CD41CE9139700CBBEE9 /* SquareOsc.h in Sources */ = {isa = PBXBuildFile; fileRef = 097B3CD31CE9139700CBBEE9 /* SquareOsc.h */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
@@ -48,6 +49,7 @@
 		0970F7151CE8FEB80022E5C3 /* TimeStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeStruct.h; sourceTree = "<group>"; };
 		0970F7161CE8FEB80022E5C3 /* WavPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WavPlayer.h; sourceTree = "<group>"; };
 		0970F7171CE8FEB80022E5C3 /* WavReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WavReader.h; sourceTree = "<group>"; };
+		097B3CD31CE9139700CBBEE9 /* SquareOsc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareOsc.h; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E4B69B5B0A3A1756003C02F2 /* approxPiDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = approxPiDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
@@ -116,6 +118,7 @@
 				0970F7171CE8FEB80022E5C3 /* WavReader.h */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				097B3CD31CE9139700CBBEE9 /* SquareOsc.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -230,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				097B3CD41CE9139700CBBEE9 /* SquareOsc.h in Sources */,
 				0970F7181CE8FEB80022E5C3 /* ApproximatePi.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
