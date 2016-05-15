@@ -13,7 +13,7 @@
 
 using namespace std;
 
-#define NCHANNELS 6
+#define NCHANNELS 2
 
 class ofApp : public ofBaseApp{
 	public:
@@ -64,7 +64,7 @@ class ofApp : public ofBaseApp{
         int bufReader = 0;
 
         // For Drawing Digits
-	    ofFbo fbo[NCHANNELS];
+	    ofFbo fbo[6];
         ofColor bgColor = ofColor(0, 0, 0);
         ofColor fontColor;
         float myHue = 25;

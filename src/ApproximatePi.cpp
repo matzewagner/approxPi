@@ -1,4 +1,5 @@
 #include "ApproximatePi.h"
+#include <iostream>
 
 #define N_SAMPS 5040
 
@@ -57,19 +58,25 @@ void ApproximatePi::computePartialAmps(double number, float output_array[])
 	int digits[APPROXIMATOR_PRECISION];
 
 	getDigits(number, digits);
+    
 
 	for(int i=0; i<APPROXIMATOR_PRECISION; i++)
 	{
 		output_array[i] = pow(2, digits[i]);
 		output_array[i] *= 2 * M_PI/(i+1);		//Sawtooth-spectral factor
+        
+        output_array[i] /= pow(2, 10) * M_PI;
+        
+//        std::cout << output_array[i] << ", " ;
+
 	}
+//    std::cout << std::endl;
 }
 
 void ApproximatePi::disableAudio(void)
 {
     audioDisabled = true;    
 }
-
 
 float ApproximatePi::getAudioSample(void)
 {
@@ -81,7 +88,7 @@ float ApproximatePi::getAudioSample(void)
     {
         out += amplitudes[i] * partials[i].tick();
     }
-    return out;
+    return out*1.0/APPROXIMATOR_PRECISION;
 }
 
 void getDigits(double number, int digits[APPROXIMATOR_PRECISION])
