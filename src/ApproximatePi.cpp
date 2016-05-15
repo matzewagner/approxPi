@@ -49,11 +49,7 @@ float ApproximatePi::tick()
 		approximate();
 	}
     
-    if (!audioDisabled)
-    {
-        return getAudioSample();
-    }
-
+    return audioDisabled ? 0 : getAudioSample();
 }
 
 void ApproximatePi::computePartialAmps(double number, float output_array[])
@@ -83,7 +79,7 @@ float ApproximatePi::getAudioSample(void)
     
     for (int i=0; i<APPROXIMATOR_PRECISION; i++)
     {
-        out += amplitudes[i] * SquareOsc(partials[i]);
+        out += amplitudes[i] * partials[i].tick();
     }
     return out;
 }

@@ -61,7 +61,7 @@ private:
 	int ticker = 0;
 	long int currentApproxIndex;
     bool audioDisabled = false;
-    Phasor partials[APPROXIMATOR_PRECISION];
+    SquareOsc partials[APPROXIMATOR_PRECISION];
     
     //! \brief Computes the amplitudes for all the partials based on currentApprox and stores it in output_array
     void computePartialAmps(double number, float output_array[APPROXIMATOR_PRECISION]);
