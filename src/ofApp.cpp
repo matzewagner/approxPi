@@ -9,9 +9,8 @@ void ofApp::setup(){
     if( !PiPlayer.open_file(fName) )
     {
         cout << "Error opening file" << endl;
-        exit();
+        ofExit();
     }
-    
     
     TimeStruct endTime(6, 30);
     PiPlayer.setEndTime(endTime);
@@ -96,6 +95,7 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
             
             output[i+chan] = PiPlayer.audiofile.next_sample();
         }
+    
         
         // This ensures that you can read the 8-channel file correctly.
         // Increments file pointer so that it reaches the end of the frame.

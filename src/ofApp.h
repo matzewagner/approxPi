@@ -56,7 +56,7 @@ class ofApp : public ofBaseApp{
 		// For doing the approximations
 		ApproximatePi approximator[6];
 
-        string fName = "data/ApproxPi_8ChannelNew.wav";
+        string fName = ofToDataPath("ApproxPi_8ChannelNew.wav", true);
         WavPlayer PiPlayer;
     
         int counter = 0;
