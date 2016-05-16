@@ -27,7 +27,18 @@ void ApproximatePi::Reset(void)
 
 void ApproximatePi::setTransposeFactor(int transpose_factor)
 {
-	sample_drop = 5040/transpose_factor;
+    
+    currentApprox = 4;
+    currentApproxIndex = 0;
+    currentSign = 1;
+    
+    sample_drop = 5040/transpose_factor;
+    
+    for (int i=0; i<APPROXIMATOR_PRECISION; i++)
+    {
+        float frequency = (8.75 * i+1) * transpose_factor;
+        partials[i].set_freq(frequency);
+    }
 }
 
 void ApproximatePi::approximate(void)
