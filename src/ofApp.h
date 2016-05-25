@@ -12,6 +12,21 @@
 #include "WavPlayer.h"
 #include "ofxOsc.h"
 
+#define AKSHAY
+//#define MATZE
+
+#ifdef AKSHAY
+#define SEND_PORT 12345
+#define SEND_HOST "matze.local"
+#define RECEIVE_PORT 12334
+#endif
+
+#ifdef MATZE
+#define SEND_PORT 12334
+#define SEND_HOST "Akshay.local"
+#define RECEIVE_PORT 12345
+#endif
+
 using namespace std;
 
 #define NCHANNELS 2
@@ -35,23 +50,16 @@ class ofApp : public ofBaseApp{
         void draw_w6(ofEventArgs & args);
 		
 		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y);
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
 		void exit();
 		void audioOut( float * output, int bufferSize, int nChannels );
-		void drawDigits(double number);
+		
+        void drawDigits(double number);
         void drawStatus(int wNum);
         void drawBlack();
         void scaleContent(int w, int h);
-
+        void togglePlay();
+        void stopPlayback();
+        void toggleStatus(int s);
 
 	private:
 		// For doing the approximations
@@ -80,6 +88,7 @@ class ofApp : public ofBaseApp{
         int status = 2; // 0 = black, 1 = status, 2 = pi
     
         ofxOscSender sender;
+        ofxOscReceiver receiver;
     
     
     

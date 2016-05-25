@@ -12,6 +12,9 @@ void ofApp::setup(){
         ofExit();
     }
     
+    receiver.setup(RECEIVE_PORT);
+    sender.setup(SEND_HOST, SEND_PORT);
+    
     TimeStruct endTime(6, 30);
     PiPlayer.setEndTime(endTime);
 
@@ -59,6 +62,26 @@ void ofApp::setup_w6(){
 }
 
 //--------------------------------------------------------------
+void ofApp::togglePlay() {
+    PiPlayer.togglePlay();
+}
+
+//--------------------------------------------------------------
+void ofApp::stopPlayback() {
+    
+    PiPlayer.stop();
+    
+    for(int i=0; i<NCHANNELS; i++) {
+        approximator[i].Reset();
+    }
+}
+
+//--------------------------------------------------------------
+void ofApp::toggleStatus(int s) {
+    status = s;
+}
+
+//--------------------------------------------------------------
 void ofApp::update(){
     
     for (int i=0; i<NCHANNELS; ++i)
@@ -83,6 +106,32 @@ void ofApp::update(){
         ofPopMatrix();
         fbo[i].end();
     }
+    
+    // check for waiting messages
+    while( receiver.hasWaitingMessages() )
+    {
+        // get the next message
+        ofxOscMessage m;
+        receiver.getNextMessage(&m);
+        if (m.getAddress() == "/togglePlay")
+        {
+            togglePlay();
+        }
+        if (m.getAddress() == "/reset")
+        {
+            stopPlayback();
+        }
+        if (m.getAddress() == "/toggleMute")
+        {
+            PiPlayer.toggleMute();
+        }
+        if (m.getAddress() == "/toggleStatus")
+        {
+            int statusValue = m.getArgAsInt(0);
+            toggleStatus(statusValue);
+        }
+    }
+
 }
 
 //--------------------------------------------------------------
@@ -262,72 +311,58 @@ void ofApp::exit(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     if(key == ' ')
-        PiPlayer.togglePlay();
+    {
+        ofxOscMessage m;
+        m.setAddress("/togglePlay");
+        sender.sendMessage( m );
+        
+        togglePlay();
+        
+    }
     if(key == 'm')
+    {
+        ofxOscMessage m;
+        m.setAddress("/toggleMute");
+        sender.sendMessage( m );
+        
         PiPlayer.toggleMute();
+    }
     if(key == '1')
+    {
         status = 0;
+        ofxOscMessage m;
+        m.setAddress("/toggleStatus");
+        m.addIntArg(status);
+        sender.sendMessage( m );
+        
+    }
     if(key == '2')
+    {
         status = 1;
+        ofxOscMessage m;
+        m.setAddress("/toggleStatus");
+        m.addIntArg(status);
+        sender.sendMessage( m );
+
+    }
     if(key == '3')
+    {
         status = 2;
+        ofxOscMessage m;
+        m.setAddress("/toggleStatus");
+        m.addIntArg(status);
+        sender.sendMessage( m );
+
+    }
     if(key == '0')
     {
-        PiPlayer.stop();
-        for(int i=0; i<NCHANNELS; i++)
-            approximator[i].Reset();
+        ofxOscMessage m;
+        m.setAddress("/reset");
+        sender.sendMessage( m );
+        
+        stopPlayback();
     }
-    if (key == 'f')
-        ofToggleFullscreen();
 
 }
 
 //--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
-}

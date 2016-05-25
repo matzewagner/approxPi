@@ -21,17 +21,21 @@ public:
             phase = phase - 2*M_PI;
     }
     
+    
     float tick()
     {
+
         increment();
         
         if (phase < M_PI)
             return 1;
         else
             return -1;
+        
     }
     
 private:
     float phase_increment=0;
+
 };
 #endif
