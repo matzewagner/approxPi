@@ -4,18 +4,10 @@ string myPi;
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    ofSetDataPathRoot("../Resources/data/");
-    
-    if( !PiPlayer.open_file(fName) )
-    {
-        cout << "Error opening file" << endl;
-    }
+//    ofSetDataPathRoot("../Resources/data/");
     
     receiver.setup(RECEIVE_PORT);
     sender.setup(SEND_HOST, SEND_PORT);
-    
-    TimeStruct endTime(6, 30);
-    PiPlayer.setEndTime(endTime);
 
     // Setting respective transposition factors
     for(int i=0; i<NCHANNELS; i++)
@@ -62,13 +54,11 @@ void ofApp::setup_w6(){
 
 //--------------------------------------------------------------
 void ofApp::togglePlay() {
-    PiPlayer.togglePlay();
+    playing = !playing;
 }
 
 //--------------------------------------------------------------
 void ofApp::stopPlayback() {
-    
-    PiPlayer.stop();
     
     for(int i=0; i<NCHANNELS; i++) {
         approximator[i].Reset();
@@ -138,18 +128,15 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
     for (int i=0; i<bufferSize * nChannels; i+=nChannels) {
         for (int chan=0; chan<nChannels; chan++)
         {
-            if(PiPlayer.isPlaying() && !mute)
+            if(isPlaying() && !mute)
             {
                 output[i+chan] = approximator[chan].tick();
             }
-            else if (PiPlayer.isPlaying() && mute)
+            else if (isPlaying() && mute)
             {
-                output[i+chan] = approximator[chan].tick()*10;
+                approximator[chan].tick();
+                output[i+chan] = 0;
             }
-            
-            
-//            output[i+chan] = PiPlayer.audiofile.next_sample();
-            
         }
     
         
@@ -203,6 +190,11 @@ void ofApp::draw_w6(ofEventArgs & args){
 //--------------------------------------------------------------
 void ofApp::drawBlack(){
 
+}
+//--------------------------------------------------------------
+bool ofApp::isPlaying()
+{
+    return playing;
 }
 //--------------------------------------------------------------
 void ofApp::drawDigits(double number){
@@ -279,12 +271,10 @@ void ofApp::drawStatus(int wNum){
     myStatusFont.drawString(wN, xMargin, lineSpacing*1);
     
     // draw time elapsed status
-    TimeStruct dur = PiPlayer.getCurrentTime();
-    string t_elapsed = "Time elapsed: " + to_string(dur.minutes) + ":" + to_string(dur.seconds);
-    myStatusFont.drawString(t_elapsed, xMargin, lineSpacing*2);
+    myStatusFont.drawString("NO TIME", xMargin, lineSpacing*2);
     
     // draw play/pause status
-    if (PiPlayer.isPlaying()) {
+    if (isPlaying()) {
         ofSetColor(0, 255, 0);
         myStatusFont.drawString("Play", xMargin, lineSpacing*3);
 
@@ -294,7 +284,7 @@ void ofApp::drawStatus(int wNum){
     }
     
     // draw mute status
-    if (PiPlayer.isMuted()) {
+    if (mute) {
         ofSetColor(255, 0, 0);
         myStatusFont.drawString("Mute", xMargin, lineSpacing*4);
     }

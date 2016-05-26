@@ -9,7 +9,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "WavPlayer.h"
 #include "ofxOsc.h"
 
 #define AKSHAY
@@ -61,18 +60,19 @@ class ofApp : public ofBaseApp{
         void stopPlayback();
         void toggleStatus(int s);
         bool toggleMute();
-
+        bool isPlaying();
+    
 	private:
 		// For doing the approximations
     ApproximatePi approximator[6];
 
         string fName = ofToDataPath("ApproxPi_8Channel.wav", true);
-        WavPlayer PiPlayer;
     
         int counter = 0;
         float *buf;
         int bufReader = 0;
         bool mute = false;
+        bool playing = false;
 
         // For Drawing Digits
 	    ofFbo fbo[6];
