@@ -63,6 +63,8 @@ void ofApp::stopPlayback() {
     for(int i=0; i<NCHANNELS; i++) {
         approximator[i].Reset();
     }
+    sampleCounter = 0;
+    playing = false;
 }
 
 //--------------------------------------------------------------
@@ -141,8 +143,10 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
                 
             }
         }
-        ++sampleCounter;
-        
+        if( isPlaying())
+        {
+            ++sampleCounter;
+        }
     }
 }
 
