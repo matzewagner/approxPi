@@ -29,7 +29,7 @@
 
 using namespace std;
 
-#define NCHANNELS 2
+#define NCHANNELS 6
 
 class ofApp : public ofBaseApp{
 	public:
@@ -60,17 +60,19 @@ class ofApp : public ofBaseApp{
         void togglePlay();
         void stopPlayback();
         void toggleStatus(int s);
+        bool toggleMute();
 
 	private:
 		// For doing the approximations
-		ApproximatePi approximator[6];
+    ApproximatePi approximator[6];
 
-        string fName = ofToDataPath("ApproxPi_8ChannelNew.wav", true);
+        string fName = ofToDataPath("ApproxPi_8Channel.wav", true);
         WavPlayer PiPlayer;
     
         int counter = 0;
         float *buf;
         int bufReader = 0;
+        bool mute = false;
 
         // For Drawing Digits
 	    ofFbo fbo[6];

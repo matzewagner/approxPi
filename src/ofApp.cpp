@@ -9,7 +9,6 @@ void ofApp::setup(){
     if( !PiPlayer.open_file(fName) )
     {
         cout << "Error opening file" << endl;
-        ofExit();
     }
     
     receiver.setup(RECEIVE_PORT);
@@ -123,7 +122,7 @@ void ofApp::update(){
         }
         if (m.getAddress() == "/toggleMute")
         {
-            PiPlayer.toggleMute();
+            toggleMute();
         }
         if (m.getAddress() == "/toggleStatus")
         {
@@ -139,8 +138,15 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
     for (int i=0; i<bufferSize * nChannels; i+=nChannels) {
         for (int chan=0; chan<nChannels; chan++)
         {
-            if(PiPlayer.isPlaying())
+            if(PiPlayer.isPlaying() && !mute)
+            {
                 output[i+chan] = approximator[chan].tick();
+            }
+            else if (PiPlayer.isPlaying() && mute)
+            {
+                output[i+chan] = approximator[chan].tick()*10;
+            }
+            
             
 //            output[i+chan] = PiPlayer.audiofile.next_sample();
             
@@ -149,10 +155,7 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
         
         // This ensures that you can read the 8-channel file correctly.
         // Increments file pointer so that it reaches the end of the frame.
-        for (int chan=0; chan<(PiPlayer.audiofile.nChannels()-nChannels); chan++)
-        {
-            PiPlayer.audiofile.next_sample();
-        }
+
     }
 }
 
@@ -325,7 +328,7 @@ void ofApp::keyPressed(int key){
         m.setAddress("/toggleMute");
         sender.sendMessage( m );
         
-        PiPlayer.toggleMute();
+        toggleMute();
     }
     if(key == '1')
     {
@@ -366,3 +369,9 @@ void ofApp::keyPressed(int key){
 }
 
 //--------------------------------------------------------------
+
+bool ofApp::toggleMute()
+{
+    mute = !mute;
+    return mute;
+}
