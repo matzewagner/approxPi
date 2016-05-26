@@ -128,21 +128,21 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
     for (int i=0; i<bufferSize * nChannels; i+=nChannels) {
         for (int chan=0; chan<nChannels; chan++)
         {
-            if(isPlaying() && !mute)
+            if (isPlaying())
             {
-                output[i+chan] = approximator[chan].tick();
-            }
-            else if (isPlaying() && mute)
-            {
-                approximator[chan].tick();
-                output[i+chan] = 0;
+                if(mute)
+                {
+                    approximator[chan].tick();
+                    output[i+chan] = 0;
+                }
+                else {
+                    output[i+chan] = approximator[chan].tick();
+                }
+                
             }
         }
-    
+        ++sampleCounter;
         
-        // This ensures that you can read the 8-channel file correctly.
-        // Increments file pointer so that it reaches the end of the frame.
-
     }
 }
 
@@ -271,7 +271,14 @@ void ofApp::drawStatus(int wNum){
     myStatusFont.drawString(wN, xMargin, lineSpacing*1);
     
     // draw time elapsed status
-    myStatusFont.drawString("NO TIME", xMargin, lineSpacing*2);
+    // draw time elapsed status
+    float seconds = sampleCounter / float(SR);
+    int displayHours = std::floor(seconds/3600.0);
+    int displayMinutes = std::floor(std::fmod((seconds/60.0),60.0));
+    int displaySeconds = std::fmod(seconds,60);
+    
+    std::string time = ofToString(displayHours) + ":" + ofToString(displayMinutes) + ":" + ofToString(displaySeconds);
+    myStatusFont.drawString(time, xMargin, lineSpacing*2);
     
     // draw play/pause status
     if (isPlaying()) {

@@ -29,6 +29,7 @@
 using namespace std;
 
 #define NCHANNELS 6
+#define SR 44100
 
 class ofApp : public ofBaseApp{
 	public:
@@ -73,6 +74,8 @@ class ofApp : public ofBaseApp{
         int bufReader = 0;
         bool mute = false;
         bool playing = false;
+        unsigned long sampleCounter = 0;
+
 
         // For Drawing Digits
 	    ofFbo fbo[6];
