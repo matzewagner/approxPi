@@ -23,6 +23,7 @@ void ApproximatePi::Reset(void)
     currentApprox = 4;
     currentApproxIndex = 0;
     currentSign = 1;
+    reachedEnd = false;
 }
 
 void ApproximatePi::setTransposeFactor(int transpose_factor)
@@ -82,6 +83,16 @@ void ApproximatePi::computePartialAmps(double number, float output_array[])
 
 	}
 //    std::cout << std::endl;
+}
+
+bool ApproximatePi::hasEnded()
+{
+    return reachedEnd;
+}
+
+void ApproximatePi::end()
+{
+    reachedEnd = true;
 }
 
 void ApproximatePi::disableAudio(void)

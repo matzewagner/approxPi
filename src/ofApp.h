@@ -1,18 +1,15 @@
 #pragma once
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 1024
-
 #include "ofMain.h"
 #include "ApproximatePi.h"
-
 #include <iostream>
 #include <fstream>
 #include <string>
 #include "ofxOsc.h"
+#include <cmath>
 
-#define AKSHAY
-//#define MATZE
+//#define AKSHAY
+#define MATZE
 
 #ifdef AKSHAY
 #define SEND_PORT 12345
@@ -26,10 +23,14 @@
 #define RECEIVE_PORT 12345
 #endif
 
-using namespace std;
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 1024
 
 #define NCHANNELS 6
 #define SR 44100
+#define END_TIME_IN_MINUTES 120
+
+using namespace std;
 
 class ofApp : public ofBaseApp{
 	public:
@@ -65,7 +66,7 @@ class ofApp : public ofBaseApp{
     
 	private:
 		// For doing the approximations
-    ApproximatePi approximator[6];
+        ApproximatePi approximator[6];
 
         string fName = ofToDataPath("ApproxPi_8Channel.wav", true);
     
@@ -74,8 +75,8 @@ class ofApp : public ofBaseApp{
         int bufReader = 0;
         bool mute = false;
         bool playing = false;
+        bool endFlag = false;
         unsigned long sampleCounter = 0;
-
 
         // For Drawing Digits
 	    ofFbo fbo[6];
@@ -95,7 +96,4 @@ class ofApp : public ofBaseApp{
         ofxOscSender sender;
         ofxOscReceiver receiver;
     
-    
-    
-
 };

@@ -55,12 +55,19 @@ public:
     //! \brief Disables the all audio computation during tick(). Audio is on by default.
     //! Use this if you want to use a custom audio file.
     void disableAudio(void);
+    
+    //! \brief ends each approximator separately with a defined fade out time
+    void end();
+    
+    //! \brief return whether this approximator has reached the end time
+    bool hasEnded();
 
 private:
 	int sample_drop;
 	int ticker = 0;
 	long int currentApproxIndex;
     bool audioDisabled = false;
+    bool reachedEnd = false;
     SquareOsc partials[APPROXIMATOR_PRECISION];
     
     //! \brief Computes the amplitudes for all the partials based on currentApprox and stores it in output_array
