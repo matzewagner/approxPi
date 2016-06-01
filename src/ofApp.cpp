@@ -28,30 +28,30 @@ void ofApp::setup(){
     
 }
 
-//--------------------------------------------------------------
-void ofApp::setup_w2(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w3(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w4(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w5(){
-    ofBackground(bgColor);
-}
-
-//--------------------------------------------------------------
-void ofApp::setup_w6(){
-    ofBackground(bgColor);
-}
+////--------------------------------------------------------------
+//void ofApp::setup_w2(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w3(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w4(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w5(){
+//    ofBackground(bgColor);
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::setup_w6(){
+//    ofBackground(bgColor);
+//}
 
 //--------------------------------------------------------------
 void ofApp::togglePlay() {
@@ -89,7 +89,7 @@ void ofApp::update(){
         ofClear(0, 0, 0, 0);
         ofPushMatrix();
         if (status == 2) {
-            drawDigits(latest_approximation);
+            drawDigits(latest_approximation, i);
         } else if (status == 1) {
             drawStatus(i+1);
         } else if (status == 0) {
@@ -128,7 +128,10 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
-    for (int i=0; i<bufferSize * nChannels; i+=nChannels) {
+    
+    for (int i=0; i<bufferSize * nChannels; i+=nChannels)
+    {
+        
         for (int chan=0; chan<nChannels; chan++)
         {
             // check for when the piece should end
@@ -171,87 +174,106 @@ void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-    if (!approximator[0].hasEnded())
+    
+    int x = 0;
+    int y = 0;
+    for (int i=0; i<NCHANNELS; ++i)
     {
-        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
-        fbo[0].draw(0,0);
-    }
-    else
-    {
-        drawBlack();
+        
+        ofPushMatrix();
+        if (!approximator[i].hasEnded())
+        {
+            float scaleX = ofGetWindowWidth()*0.33;
+            float scaleY = ofGetWindowHeight()*0.5;
+            ofTranslate(x*scaleX, y*scaleY);
+            scaleContent(scaleX, scaleY);
+            fbo[i].draw(0,0);
+        }
+        else
+        {
+            drawBlack();
+        }
+        ofPopMatrix();
+
+        ++x;
+        if (x%3 == 0)
+        {
+            ++y;
+            x = 0;
+        }
     }
 
 }
 
+//////--------------------------------------------------------------
+//void ofApp::draw_w2(ofEventArgs & args){
+//    if (!approximator[1].hasEnded())
+//    {
+//        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
+//        ofBackground(bgColor);
+//        fbo[1].draw(0,0);
+//    }
+//    else
+//    {
+//        drawBlack();
+//    }
+//}
+//
 ////--------------------------------------------------------------
-void ofApp::draw_w2(ofEventArgs & args){
-    if (!approximator[1].hasEnded())
-    {
-        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
-        ofBackground(bgColor);
-        fbo[1].draw(0,0);
-    }
-    else
-    {
-        drawBlack();
-    }
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w3(ofEventArgs & args){
-    if (!approximator[2].hasEnded())
-    {
-        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
-        ofBackground(bgColor);
-        fbo[2].draw(0,0);
-    }
-    else
-    {
-        drawBlack();
-    }
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w4(ofEventArgs & args){
-    if (!approximator[3].hasEnded())
-    {
-        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
-        ofBackground(bgColor);
-        fbo[3].draw(0,0);
-    }
-    else
-    {
-        drawBlack();
-    }
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w5(ofEventArgs & args){
-    if (!approximator[4].hasEnded())
-    {
-        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
-        ofBackground(bgColor);
-        fbo[4].draw(0,0);
-    }
-    else
-    {
-        drawBlack();
-    }
-}
-
-//--------------------------------------------------------------
-void ofApp::draw_w6(ofEventArgs & args){
-    if (!approximator[5].hasEnded())
-    {
-        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
-        ofBackground(bgColor);
-        fbo[5].draw(0,0);
-    }
-    else
-    {
-        drawBlack();
-    }
-}
+//void ofApp::draw_w3(ofEventArgs & args){
+//    if (!approximator[2].hasEnded())
+//    {
+//        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
+//        ofBackground(bgColor);
+//        fbo[2].draw(0,0);
+//    }
+//    else
+//    {
+//        drawBlack();
+//    }
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::draw_w4(ofEventArgs & args){
+//    if (!approximator[3].hasEnded())
+//    {
+//        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
+//        ofBackground(bgColor);
+//        fbo[3].draw(0,0);
+//    }
+//    else
+//    {
+//        drawBlack();
+//    }
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::draw_w5(ofEventArgs & args){
+//    if (!approximator[4].hasEnded())
+//    {
+//        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
+//        ofBackground(bgColor);
+//        fbo[4].draw(0,0);
+//    }
+//    else
+//    {
+//        drawBlack();
+//    }
+//}
+//
+////--------------------------------------------------------------
+//void ofApp::draw_w6(ofEventArgs & args){
+//    if (!approximator[5].hasEnded())
+//    {
+//        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
+//        ofBackground(bgColor);
+//        fbo[5].draw(0,0);
+//    }
+//    else
+//    {
+//        drawBlack();
+//    }
+//}
 
 //--------------------------------------------------------------
 void ofApp::drawBlack()
@@ -266,15 +288,23 @@ bool ofApp::isPlaying()
 }
 
 //--------------------------------------------------------------
-void ofApp::drawDigits(double number){
+void ofApp::drawDigits(double number, int window){
 
     int lineIndex = 1;
     int place = 1;
     float letterWidthScaler = 0.8;
     verticalFontMargin = fontSize*0.15;
-
     
+    // draw ¹
     piSymbol.draw(-fontSize*0.5, verticalFontMargin);
+    
+    // draw window number
+    ofPushMatrix();
+    ofSetColor(192, 192, 192);
+    ofTranslate(-fontSize*0.25, (fontSize + verticalFontMargin) * 1.5);
+    ofScale(0.4, 0.3);
+    myNumberFont.drawString(windowNumbers[window], 0, 0);
+    ofPopMatrix();
     
     int digits[APPROXIMATOR_PRECISION];
     getDigits(number, digits);    // Get the digits
@@ -367,10 +397,13 @@ void ofApp::drawStatus(int wNum){
 
 //--------------------------------------------------------------
 void ofApp::scaleContent(int w, int h) {
+    
     float horizontalWindowScaleFactor = w / float(fontSize*6.0);
     float verticalWindowScaleFactor = h / float(fontSize*3.8);
     ofScale(horizontalWindowScaleFactor, verticalWindowScaleFactor);
+    
 }
+
 //--------------------------------------------------------------
 void ofApp::exit(){
     ofSoundStreamClose();

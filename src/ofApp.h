@@ -35,26 +35,26 @@ using namespace std;
 class ofApp : public ofBaseApp{
 	public:
 		void setup();
-        void setup_w2();
-        void setup_w3();
-        void setup_w4();
-        void setup_w5();
-        void setup_w6();
+//        void setup_w2();
+//        void setup_w3();
+//        void setup_w4();
+//        void setup_w5();
+//        void setup_w6();
 	
         void update();
     
 		void draw();
-        void draw_w2(ofEventArgs & args);
-        void draw_w3(ofEventArgs & args);
-        void draw_w4(ofEventArgs & args);
-        void draw_w5(ofEventArgs & args);
-        void draw_w6(ofEventArgs & args);
+//        void draw_w2(ofEventArgs & args);
+//        void draw_w3(ofEventArgs & args);
+//        void draw_w4(ofEventArgs & args);
+//        void draw_w5(ofEventArgs & args);
+//        void draw_w6(ofEventArgs & args);
 		
 		void keyPressed(int key);
 		void exit();
 		void audioOut( float * output, int bufferSize, int nChannels );
 		
-        void drawDigits(double number);
+        void drawDigits(double number, int window);
         void drawStatus(int wNum);
         void drawBlack();
         void scaleContent(int w, int h);
@@ -84,7 +84,8 @@ class ofApp : public ofBaseApp{
         ofColor fontColor;
         float myHue = 25;
         ofTrueTypeFont myNumberFont, myPiFont, myStatusFont;
-        
+        std::string windowNumbers[16] = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI"};
+    
         int fontSize;
         float verticalFontMargin;
         float lineSpacing[3] = {0.3, 0.625, 0.95};
