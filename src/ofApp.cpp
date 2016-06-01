@@ -28,30 +28,6 @@ void ofApp::setup(){
     
 }
 
-////--------------------------------------------------------------
-//void ofApp::setup_w2(){
-//    ofBackground(bgColor);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::setup_w3(){
-//    ofBackground(bgColor);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::setup_w4(){
-//    ofBackground(bgColor);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::setup_w5(){
-//    ofBackground(bgColor);
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::setup_w6(){
-//    ofBackground(bgColor);
-//}
 
 //--------------------------------------------------------------
 void ofApp::togglePlay() {
@@ -85,7 +61,7 @@ void ofApp::update(){
 
         // write to frame buffer object
         fbo[i].begin();
-        ofTranslate(fontSize*0.6,  verticalFontMargin);
+        ofTranslate(fontSize,  verticalFontMargin);
         ofClear(0, 0, 0, 0);
         ofPushMatrix();
         if (status == 2) {
@@ -205,75 +181,6 @@ void ofApp::draw() {
 
 }
 
-//////--------------------------------------------------------------
-//void ofApp::draw_w2(ofEventArgs & args){
-//    if (!approximator[1].hasEnded())
-//    {
-//        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
-//        ofBackground(bgColor);
-//        fbo[1].draw(0,0);
-//    }
-//    else
-//    {
-//        drawBlack();
-//    }
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::draw_w3(ofEventArgs & args){
-//    if (!approximator[2].hasEnded())
-//    {
-//        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
-//        ofBackground(bgColor);
-//        fbo[2].draw(0,0);
-//    }
-//    else
-//    {
-//        drawBlack();
-//    }
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::draw_w4(ofEventArgs & args){
-//    if (!approximator[3].hasEnded())
-//    {
-//        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
-//        ofBackground(bgColor);
-//        fbo[3].draw(0,0);
-//    }
-//    else
-//    {
-//        drawBlack();
-//    }
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::draw_w5(ofEventArgs & args){
-//    if (!approximator[4].hasEnded())
-//    {
-//        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
-//        ofBackground(bgColor);
-//        fbo[4].draw(0,0);
-//    }
-//    else
-//    {
-//        drawBlack();
-//    }
-//}
-//
-////--------------------------------------------------------------
-//void ofApp::draw_w6(ofEventArgs & args){
-//    if (!approximator[5].hasEnded())
-//    {
-//        scaleContent(ofGetWindowWidth(), ofGetWindowHeight());
-//        ofBackground(bgColor);
-//        fbo[5].draw(0,0);
-//    }
-//    else
-//    {
-//        drawBlack();
-//    }
-//}
 
 //--------------------------------------------------------------
 void ofApp::drawBlack()
